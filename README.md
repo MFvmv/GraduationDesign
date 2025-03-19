@@ -61,7 +61,7 @@ hospital
 - **mbg**：使用MyBatis Generator生成的基础代码，减少开发工作量。  
 - **restful**：RESTful API接口实现，提供对外服务能力。  
 - **restful_generate**：基于**MyBatis-Plus**和**Velocity**自动生成的RESTful API模块，减少手动代码量。  
-- **search**：集成**Elasticsearch**，提供全文检索和数据查询能力。  
+- **search**：集成**Elasticsearch**，提供全文检索和数据查询能力。 (因服务器内存过小无法支持) 
 - **security**：使用**Spring Security**实现身份认证和权限管理，确保系统安全性。  
 
 ---
@@ -192,7 +192,7 @@ src
 ---
 
 ## 联系方式
-如有问题或建议，请联系邮箱：**yourname@example.com**
+如有问题或建议，请联系邮箱：**2358672177@qq.com**
 
 ---
 
