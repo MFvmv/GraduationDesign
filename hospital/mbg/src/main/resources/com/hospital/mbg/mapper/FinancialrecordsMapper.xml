@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mbg.mapper.FinancialrecordsMapper">
+  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.Financialrecords">
+    <id column="TransactionID" jdbcType="INTEGER" property="TransactionID" />
+    <result column="PatientID" jdbcType="INTEGER" property="PatientID" />
+    <result column="Amount" jdbcType="DECIMAL" property="Amount" />
+    <result column="TransactionDate" jdbcType="DATE" property="TransactionDate" />
+    <result column="PaymentMethod" jdbcType="CHAR" property="PaymentMethod" />
+    <result column="PaymentStatus" jdbcType="CHAR" property="PaymentStatus" />
+    <result column="OrderNumber" jdbcType="VARCHAR" property="OrderNumber" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hospital.mbg.model.Financialrecords">
+    <result column="Description" jdbcType="LONGVARCHAR" property="Description" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    TransactionID, PatientID, Amount, TransactionDate, PaymentMethod, PaymentStatus, 
+    OrderNumber
+  </sql>
+  <sql id="Blob_Column_List">
+    Description
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hospital.mbg.model.FinancialrecordsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from financialrecords
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hospital.mbg.model.FinancialrecordsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from financialrecords
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from financialrecords
+    where TransactionID = #{TransactionID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from financialrecords
+    where TransactionID = #{TransactionID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.FinancialrecordsExample">
+    delete from financialrecords
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="TransactionID" parameterType="com.hospital.mbg.model.Financialrecords" useGeneratedKeys="true">
+    insert into financialrecords (TransactionID, PatientID, Amount, 
+      TransactionDate, PaymentMethod, PaymentStatus, 
+      OrderNumber, Description)
+    values (#{TransactionID,jdbcType=INTEGER}, #{PatientID,jdbcType=INTEGER}, #{Amount,jdbcType=DECIMAL}, 
+      #{TransactionDate,jdbcType=DATE}, #{PaymentMethod,jdbcType=CHAR}, #{PaymentStatus,jdbcType=CHAR}, 
+      #{OrderNumber,jdbcType=VARCHAR}, #{Description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="TransactionID" parameterType="com.hospital.mbg.model.Financialrecords" useGeneratedKeys="true">
+    insert into financialrecords
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="TransactionID != null">
+        TransactionID,
+      </if>
+      <if test="PatientID != null">
+        PatientID,
+      </if>
+      <if test="Amount != null">
+        Amount,
+      </if>
+      <if test="TransactionDate != null">
+        TransactionDate,
+      </if>
+      <if test="PaymentMethod != null">
+        PaymentMethod,
+      </if>
+      <if test="PaymentStatus != null">
+        PaymentStatus,
+      </if>
+      <if test="OrderNumber != null">
+        OrderNumber,
+      </if>
+      <if test="Description != null">
+        Description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="TransactionID != null">
+        #{TransactionID,jdbcType=INTEGER},
+      </if>
+      <if test="PatientID != null">
+        #{PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="Amount != null">
+        #{Amount,jdbcType=DECIMAL},
+      </if>
+      <if test="TransactionDate != null">
+        #{TransactionDate,jdbcType=DATE},
+      </if>
+      <if test="PaymentMethod != null">
+        #{PaymentMethod,jdbcType=CHAR},
+      </if>
+      <if test="PaymentStatus != null">
+        #{PaymentStatus,jdbcType=CHAR},
+      </if>
+      <if test="OrderNumber != null">
+        #{OrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="Description != null">
+        #{Description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hospital.mbg.model.FinancialrecordsExample" resultType="java.lang.Long">
+    select count(*) from financialrecords
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update financialrecords
+    <set>
+      <if test="row.TransactionID != null">
+        TransactionID = #{row.TransactionID,jdbcType=INTEGER},
+      </if>
+      <if test="row.PatientID != null">
+        PatientID = #{row.PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="row.Amount != null">
+        Amount = #{row.Amount,jdbcType=DECIMAL},
+      </if>
+      <if test="row.TransactionDate != null">
+        TransactionDate = #{row.TransactionDate,jdbcType=DATE},
+      </if>
+      <if test="row.PaymentMethod != null">
+        PaymentMethod = #{row.PaymentMethod,jdbcType=CHAR},
+      </if>
+      <if test="row.PaymentStatus != null">
+        PaymentStatus = #{row.PaymentStatus,jdbcType=CHAR},
+      </if>
+      <if test="row.OrderNumber != null">
+        OrderNumber = #{row.OrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="row.Description != null">
+        Description = #{row.Description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update financialrecords
+    set TransactionID = #{row.TransactionID,jdbcType=INTEGER},
+      PatientID = #{row.PatientID,jdbcType=INTEGER},
+      Amount = #{row.Amount,jdbcType=DECIMAL},
+      TransactionDate = #{row.TransactionDate,jdbcType=DATE},
+      PaymentMethod = #{row.PaymentMethod,jdbcType=CHAR},
+      PaymentStatus = #{row.PaymentStatus,jdbcType=CHAR},
+      OrderNumber = #{row.OrderNumber,jdbcType=VARCHAR},
+      Description = #{row.Description,jdbcType=LONGVARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update financialrecords
+    set TransactionID = #{row.TransactionID,jdbcType=INTEGER},
+      PatientID = #{row.PatientID,jdbcType=INTEGER},
+      Amount = #{row.Amount,jdbcType=DECIMAL},
+      TransactionDate = #{row.TransactionDate,jdbcType=DATE},
+      PaymentMethod = #{row.PaymentMethod,jdbcType=CHAR},
+      PaymentStatus = #{row.PaymentStatus,jdbcType=CHAR},
+      OrderNumber = #{row.OrderNumber,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hospital.mbg.model.Financialrecords">
+    update financialrecords
+    <set>
+      <if test="PatientID != null">
+        PatientID = #{PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="Amount != null">
+        Amount = #{Amount,jdbcType=DECIMAL},
+      </if>
+      <if test="TransactionDate != null">
+        TransactionDate = #{TransactionDate,jdbcType=DATE},
+      </if>
+      <if test="PaymentMethod != null">
+        PaymentMethod = #{PaymentMethod,jdbcType=CHAR},
+      </if>
+      <if test="PaymentStatus != null">
+        PaymentStatus = #{PaymentStatus,jdbcType=CHAR},
+      </if>
+      <if test="OrderNumber != null">
+        OrderNumber = #{OrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="Description != null">
+        Description = #{Description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where TransactionID = #{TransactionID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hospital.mbg.model.Financialrecords">
+    update financialrecords
+    set PatientID = #{PatientID,jdbcType=INTEGER},
+      Amount = #{Amount,jdbcType=DECIMAL},
+      TransactionDate = #{TransactionDate,jdbcType=DATE},
+      PaymentMethod = #{PaymentMethod,jdbcType=CHAR},
+      PaymentStatus = #{PaymentStatus,jdbcType=CHAR},
+      OrderNumber = #{OrderNumber,jdbcType=VARCHAR},
+      Description = #{Description,jdbcType=LONGVARCHAR}
+    where TransactionID = #{TransactionID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hospital.mbg.model.Financialrecords">
+    update financialrecords
+    set PatientID = #{PatientID,jdbcType=INTEGER},
+      Amount = #{Amount,jdbcType=DECIMAL},
+      TransactionDate = #{TransactionDate,jdbcType=DATE},
+      PaymentMethod = #{PaymentMethod,jdbcType=CHAR},
+      PaymentStatus = #{PaymentStatus,jdbcType=CHAR},
+      OrderNumber = #{OrderNumber,jdbcType=VARCHAR}
+    where TransactionID = #{TransactionID,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mbg.mapper.HospitalbedsMapper">
+  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.Hospitalbeds">
+    <id column="BedID" jdbcType="INTEGER" property="BedID" />
+    <result column="RoomNumber" jdbcType="VARCHAR" property="RoomNumber" />
+    <result column="BedNumber" jdbcType="INTEGER" property="BedNumber" />
+    <result column="BedStatus" jdbcType="CHAR" property="BedStatus" />
+    <result column="PatientID" jdbcType="INTEGER" property="PatientID" />
+    <result column="LastUpdated" jdbcType="TIMESTAMP" property="LastUpdated" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    BedID, RoomNumber, BedNumber, BedStatus, PatientID, LastUpdated
+  </sql>
+  <select id="selectByExample" parameterType="com.hospital.mbg.model.HospitalbedsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hospitalbeds
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hospitalbeds
+    where BedID = #{BedID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hospitalbeds
+    where BedID = #{BedID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.HospitalbedsExample">
+    delete from hospitalbeds
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="BedID" parameterType="com.hospital.mbg.model.Hospitalbeds" useGeneratedKeys="true">
+    insert into hospitalbeds (BedID, RoomNumber, BedNumber, 
+      BedStatus, PatientID, LastUpdated
+      )
+    values (#{BedID,jdbcType=INTEGER}, #{RoomNumber,jdbcType=VARCHAR}, #{BedNumber,jdbcType=INTEGER}, 
+      #{BedStatus,jdbcType=CHAR}, #{PatientID,jdbcType=INTEGER}, #{LastUpdated,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="BedID" parameterType="com.hospital.mbg.model.Hospitalbeds" useGeneratedKeys="true">
+    insert into hospitalbeds
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="BedID != null">
+        BedID,
+      </if>
+      <if test="RoomNumber != null">
+        RoomNumber,
+      </if>
+      <if test="BedNumber != null">
+        BedNumber,
+      </if>
+      <if test="BedStatus != null">
+        BedStatus,
+      </if>
+      <if test="PatientID != null">
+        PatientID,
+      </if>
+      <if test="LastUpdated != null">
+        LastUpdated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="BedID != null">
+        #{BedID,jdbcType=INTEGER},
+      </if>
+      <if test="RoomNumber != null">
+        #{RoomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="BedNumber != null">
+        #{BedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="BedStatus != null">
+        #{BedStatus,jdbcType=CHAR},
+      </if>
+      <if test="PatientID != null">
+        #{PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="LastUpdated != null">
+        #{LastUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hospital.mbg.model.HospitalbedsExample" resultType="java.lang.Long">
+    select count(*) from hospitalbeds
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update hospitalbeds
+    <set>
+      <if test="row.BedID != null">
+        BedID = #{row.BedID,jdbcType=INTEGER},
+      </if>
+      <if test="row.RoomNumber != null">
+        RoomNumber = #{row.RoomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="row.BedNumber != null">
+        BedNumber = #{row.BedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="row.BedStatus != null">
+        BedStatus = #{row.BedStatus,jdbcType=CHAR},
+      </if>
+      <if test="row.PatientID != null">
+        PatientID = #{row.PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="row.LastUpdated != null">
+        LastUpdated = #{row.LastUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update hospitalbeds
+    set BedID = #{row.BedID,jdbcType=INTEGER},
+      RoomNumber = #{row.RoomNumber,jdbcType=VARCHAR},
+      BedNumber = #{row.BedNumber,jdbcType=INTEGER},
+      BedStatus = #{row.BedStatus,jdbcType=CHAR},
+      PatientID = #{row.PatientID,jdbcType=INTEGER},
+      LastUpdated = #{row.LastUpdated,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hospital.mbg.model.Hospitalbeds">
+    update hospitalbeds
+    <set>
+      <if test="RoomNumber != null">
+        RoomNumber = #{RoomNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="BedNumber != null">
+        BedNumber = #{BedNumber,jdbcType=INTEGER},
+      </if>
+      <if test="BedStatus != null">
+        BedStatus = #{BedStatus,jdbcType=CHAR},
+      </if>
+      <if test="PatientID != null">
+        PatientID = #{PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="LastUpdated != null">
+        LastUpdated = #{LastUpdated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where BedID = #{BedID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hospital.mbg.model.Hospitalbeds">
+    update hospitalbeds
+    set RoomNumber = #{RoomNumber,jdbcType=VARCHAR},
+      BedNumber = #{BedNumber,jdbcType=INTEGER},
+      BedStatus = #{BedStatus,jdbcType=CHAR},
+      PatientID = #{PatientID,jdbcType=INTEGER},
+      LastUpdated = #{LastUpdated,jdbcType=TIMESTAMP}
+    where BedID = #{BedID,jdbcType=INTEGER}
+  </update>
+</mapper>

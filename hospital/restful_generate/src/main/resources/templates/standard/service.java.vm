@@ -1,0 +1,68 @@
+package ${package.Service};
+import com.hospital.mbg.model.${entity};
+import java.util.List;
+
+#set($lowerFirstChar = $entity.substring(0, 1).toLowerCase())
+#set($remainingChars = $entity.substring(1))
+#set($FirstWordLower = $lowerFirstChar + $remainingChars)
+
+#set($idType = "Integer")
+#foreach($item in $table.fields)
+    #if($item.keyFlag)
+        #set($idType = $item.columnType.toString().substring(0, 1).toUpperCase()+$item.columnType.toString().substring(1).toLowerCase())
+    #end
+#end
+
+/**
+ * <p>
+ * $!{table.comment} 服务类
+ * 该接口提供了对预约的增、删、改、查等操作方法。
+ * 实现类需实现这些方法以满足业务需求。
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+
+public interface ${table.serviceName} {
+    /**
+     * 获取所有$!{table.comment}
+     *
+     * @return 包含所有预约的列表
+     */
+    List<${entity}> getAll();
+
+    /**
+     * 根据ID获取$!{table.comment}
+     *
+     * @param ${FirstWordLower}Id 预约ID
+     * @return 对应的预约对象，如果未找到则返回null
+     */
+    ${entity} getById(${idType} ${FirstWordLower}Id);
+
+    /**
+     * 创建新的$!{table.comment}的行
+     *
+     * @param ${FirstWordLower} 预约对象
+     * @return 创建成功返回true，否则返回false
+     */
+    boolean create(${entity} ${FirstWordLower});
+
+    /**
+     * 更新现有的$!{table.comment}
+     *
+     * @param ${FirstWordLower} 预约对象
+     * @return 更新成功返回true，否则返回false
+     */
+    boolean update(${entity} ${FirstWordLower});
+
+    /**
+     * 根据ID删除$!{table.comment}
+     *
+     * @param ${FirstWordLower}Id 预约ID
+     * @return 删除成功返回true，否则返回false
+     */
+    boolean delete(${idType} ${FirstWordLower}Id);
+
+}
+

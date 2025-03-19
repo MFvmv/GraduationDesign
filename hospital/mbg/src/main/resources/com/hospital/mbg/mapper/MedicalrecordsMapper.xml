@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mbg.mapper.MedicalrecordsMapper">
+  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.Medicalrecords">
+    <id column="RecordID" jdbcType="INTEGER" property="RecordID" />
+    <result column="PatientID" jdbcType="INTEGER" property="PatientID" />
+    <result column="RecordDate" jdbcType="TIMESTAMP" property="RecordDate" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hospital.mbg.model.Medicalrecords">
+    <result column="Diagnosis" jdbcType="LONGVARCHAR" property="Diagnosis" />
+    <result column="TreatmentPlan" jdbcType="LONGVARCHAR" property="TreatmentPlan" />
+    <result column="TestReports" jdbcType="LONGVARCHAR" property="TestReports" />
+    <result column="image_data" jdbcType="LONGVARCHAR" property="image_data" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    RecordID, PatientID, RecordDate
+  </sql>
+  <sql id="Blob_Column_List">
+    Diagnosis, TreatmentPlan, TestReports, image_data
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hospital.mbg.model.MedicalrecordsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from medicalrecords
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hospital.mbg.model.MedicalrecordsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from medicalrecords
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from medicalrecords
+    where RecordID = #{RecordID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from medicalrecords
+    where RecordID = #{RecordID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.MedicalrecordsExample">
+    delete from medicalrecords
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="RecordID" parameterType="com.hospital.mbg.model.Medicalrecords" useGeneratedKeys="true">
+    insert into medicalrecords (RecordID, PatientID, RecordDate, 
+      Diagnosis, TreatmentPlan, TestReports, 
+      image_data)
+    values (#{RecordID,jdbcType=INTEGER}, #{PatientID,jdbcType=INTEGER}, #{RecordDate,jdbcType=TIMESTAMP}, 
+      #{Diagnosis,jdbcType=LONGVARCHAR}, #{TreatmentPlan,jdbcType=LONGVARCHAR}, #{TestReports,jdbcType=LONGVARCHAR}, 
+      #{image_data,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="RecordID" parameterType="com.hospital.mbg.model.Medicalrecords" useGeneratedKeys="true">
+    insert into medicalrecords
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="RecordID != null">
+        RecordID,
+      </if>
+      <if test="PatientID != null">
+        PatientID,
+      </if>
+      <if test="RecordDate != null">
+        RecordDate,
+      </if>
+      <if test="Diagnosis != null">
+        Diagnosis,
+      </if>
+      <if test="TreatmentPlan != null">
+        TreatmentPlan,
+      </if>
+      <if test="TestReports != null">
+        TestReports,
+      </if>
+      <if test="image_data != null">
+        image_data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="RecordID != null">
+        #{RecordID,jdbcType=INTEGER},
+      </if>
+      <if test="PatientID != null">
+        #{PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="RecordDate != null">
+        #{RecordDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Diagnosis != null">
+        #{Diagnosis,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="TreatmentPlan != null">
+        #{TreatmentPlan,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="TestReports != null">
+        #{TestReports,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="image_data != null">
+        #{image_data,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hospital.mbg.model.MedicalrecordsExample" resultType="java.lang.Long">
+    select count(*) from medicalrecords
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update medicalrecords
+    <set>
+      <if test="row.RecordID != null">
+        RecordID = #{row.RecordID,jdbcType=INTEGER},
+      </if>
+      <if test="row.PatientID != null">
+        PatientID = #{row.PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="row.RecordDate != null">
+        RecordDate = #{row.RecordDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.Diagnosis != null">
+        Diagnosis = #{row.Diagnosis,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="row.TreatmentPlan != null">
+        TreatmentPlan = #{row.TreatmentPlan,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="row.TestReports != null">
+        TestReports = #{row.TestReports,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="row.image_data != null">
+        image_data = #{row.image_data,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update medicalrecords
+    set RecordID = #{row.RecordID,jdbcType=INTEGER},
+      PatientID = #{row.PatientID,jdbcType=INTEGER},
+      RecordDate = #{row.RecordDate,jdbcType=TIMESTAMP},
+      Diagnosis = #{row.Diagnosis,jdbcType=LONGVARCHAR},
+      TreatmentPlan = #{row.TreatmentPlan,jdbcType=LONGVARCHAR},
+      TestReports = #{row.TestReports,jdbcType=LONGVARCHAR},
+      image_data = #{row.image_data,jdbcType=LONGVARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update medicalrecords
+    set RecordID = #{row.RecordID,jdbcType=INTEGER},
+      PatientID = #{row.PatientID,jdbcType=INTEGER},
+      RecordDate = #{row.RecordDate,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hospital.mbg.model.Medicalrecords">
+    update medicalrecords
+    <set>
+      <if test="PatientID != null">
+        PatientID = #{PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="RecordDate != null">
+        RecordDate = #{RecordDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="Diagnosis != null">
+        Diagnosis = #{Diagnosis,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="TreatmentPlan != null">
+        TreatmentPlan = #{TreatmentPlan,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="TestReports != null">
+        TestReports = #{TestReports,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="image_data != null">
+        image_data = #{image_data,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where RecordID = #{RecordID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hospital.mbg.model.Medicalrecords">
+    update medicalrecords
+    set PatientID = #{PatientID,jdbcType=INTEGER},
+      RecordDate = #{RecordDate,jdbcType=TIMESTAMP},
+      Diagnosis = #{Diagnosis,jdbcType=LONGVARCHAR},
+      TreatmentPlan = #{TreatmentPlan,jdbcType=LONGVARCHAR},
+      TestReports = #{TestReports,jdbcType=LONGVARCHAR},
+      image_data = #{image_data,jdbcType=LONGVARCHAR}
+    where RecordID = #{RecordID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hospital.mbg.model.Medicalrecords">
+    update medicalrecords
+    set PatientID = #{PatientID,jdbcType=INTEGER},
+      RecordDate = #{RecordDate,jdbcType=TIMESTAMP}
+    where RecordID = #{RecordID,jdbcType=INTEGER}
+  </update>
+</mapper>

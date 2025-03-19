@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mbg.mapper.AlipaytransactionsMapper">
+  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.Alipaytransactions">
+    <id column="AlipayTransactionID" jdbcType="INTEGER" property="AlipayTransactionID" />
+    <result column="OrderNumber" jdbcType="VARCHAR" property="OrderNumber" />
+    <result column="TotalAmount" jdbcType="DECIMAL" property="TotalAmount" />
+    <result column="TradeStatus" jdbcType="CHAR" property="TradeStatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    AlipayTransactionID, OrderNumber, TotalAmount, TradeStatus
+  </sql>
+  <select id="selectByExample" parameterType="com.hospital.mbg.model.AlipaytransactionsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from alipaytransactions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from alipaytransactions
+    where AlipayTransactionID = #{AlipayTransactionID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from alipaytransactions
+    where AlipayTransactionID = #{AlipayTransactionID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.AlipaytransactionsExample">
+    delete from alipaytransactions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="AlipayTransactionID" parameterType="com.hospital.mbg.model.Alipaytransactions" useGeneratedKeys="true">
+    insert into alipaytransactions (AlipayTransactionID, OrderNumber, 
+      TotalAmount, TradeStatus)
+    values (#{AlipayTransactionID,jdbcType=INTEGER}, #{OrderNumber,jdbcType=VARCHAR}, 
+      #{TotalAmount,jdbcType=DECIMAL}, #{TradeStatus,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="AlipayTransactionID" parameterType="com.hospital.mbg.model.Alipaytransactions" useGeneratedKeys="true">
+    insert into alipaytransactions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="AlipayTransactionID != null">
+        AlipayTransactionID,
+      </if>
+      <if test="OrderNumber != null">
+        OrderNumber,
+      </if>
+      <if test="TotalAmount != null">
+        TotalAmount,
+      </if>
+      <if test="TradeStatus != null">
+        TradeStatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="AlipayTransactionID != null">
+        #{AlipayTransactionID,jdbcType=INTEGER},
+      </if>
+      <if test="OrderNumber != null">
+        #{OrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="TotalAmount != null">
+        #{TotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="TradeStatus != null">
+        #{TradeStatus,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hospital.mbg.model.AlipaytransactionsExample" resultType="java.lang.Long">
+    select count(*) from alipaytransactions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update alipaytransactions
+    <set>
+      <if test="row.AlipayTransactionID != null">
+        AlipayTransactionID = #{row.AlipayTransactionID,jdbcType=INTEGER},
+      </if>
+      <if test="row.OrderNumber != null">
+        OrderNumber = #{row.OrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="row.TotalAmount != null">
+        TotalAmount = #{row.TotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="row.TradeStatus != null">
+        TradeStatus = #{row.TradeStatus,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update alipaytransactions
+    set AlipayTransactionID = #{row.AlipayTransactionID,jdbcType=INTEGER},
+      OrderNumber = #{row.OrderNumber,jdbcType=VARCHAR},
+      TotalAmount = #{row.TotalAmount,jdbcType=DECIMAL},
+      TradeStatus = #{row.TradeStatus,jdbcType=CHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hospital.mbg.model.Alipaytransactions">
+    update alipaytransactions
+    <set>
+      <if test="OrderNumber != null">
+        OrderNumber = #{OrderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="TotalAmount != null">
+        TotalAmount = #{TotalAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="TradeStatus != null">
+        TradeStatus = #{TradeStatus,jdbcType=CHAR},
+      </if>
+    </set>
+    where AlipayTransactionID = #{AlipayTransactionID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hospital.mbg.model.Alipaytransactions">
+    update alipaytransactions
+    set OrderNumber = #{OrderNumber,jdbcType=VARCHAR},
+      TotalAmount = #{TotalAmount,jdbcType=DECIMAL},
+      TradeStatus = #{TradeStatus,jdbcType=CHAR}
+    where AlipayTransactionID = #{AlipayTransactionID,jdbcType=INTEGER}
+  </update>
+</mapper>

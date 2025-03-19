@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.search.dao.EsPatientsDao">
+    <resultMap id="BaseResultMap" type="com.hospital.search.domain.EsPatients">
+        <id column="PatientID" jdbcType="INTEGER" property="patientID" />
+        <result column="Name" jdbcType="VARCHAR" property="name" />
+        <result column="Gender" jdbcType="CHAR" property="gender" />
+        <result column="DateOfBirth" jdbcType="DATE" property="dateOfBirth" />
+        <result column="ContactNumber" jdbcType="VARCHAR" property="contactNumber" />
+        <result column="EmergencyContact" jdbcType="VARCHAR" property="emergencyContact" />
+        <result column="CreatedAt" jdbcType="TIMESTAMP" property="createdAt" />
+        <result column="id_card_number" jdbcType="VARCHAR" property="id_card_number" />
+        <result column="id_card_type" jdbcType="CHAR" property="id_card_type" />
+        <result column="id_card_expiry" jdbcType="DATE" property="id_card_expiry" />
+    </resultMap>
+    <select id="getAllEsPatientsList" resultMap="BaseResultMap">
+        select * from patients
+    </select>
+</mapper>

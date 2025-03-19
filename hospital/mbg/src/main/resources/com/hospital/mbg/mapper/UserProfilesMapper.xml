@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mbg.mapper.UserProfilesMapper">
+  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.UserProfiles">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="user_id" />
+    <result column="first_name" jdbcType="VARCHAR" property="first_name" />
+    <result column="last_name" jdbcType="VARCHAR" property="last_name" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="date_of_birth" jdbcType="DATE" property="date_of_birth" />
+    <result column="profile_picture" jdbcType="VARCHAR" property="profile_picture" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="postal_code" jdbcType="VARCHAR" property="postal_code" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="created_at" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updated_at" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hospital.mbg.model.UserProfiles">
+    <result column="bio" jdbcType="LONGVARCHAR" property="bio" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, first_name, last_name, gender, date_of_birth, profile_picture, address, 
+    city, state, postal_code, country, created_at, updated_at
+  </sql>
+  <sql id="Blob_Column_List">
+    bio
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hospital.mbg.model.UserProfilesExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_profiles
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hospital.mbg.model.UserProfilesExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_profiles
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user_profiles
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_profiles
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.UserProfilesExample">
+    delete from user_profiles
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.hospital.mbg.model.UserProfiles" useGeneratedKeys="true">
+    insert into user_profiles (id, user_id, first_name, 
+      last_name, gender, date_of_birth, 
+      profile_picture, address, city, 
+      state, postal_code, country, 
+      created_at, updated_at, bio
+      )
+    values (#{id,jdbcType=BIGINT}, #{user_id,jdbcType=INTEGER}, #{first_name,jdbcType=VARCHAR}, 
+      #{last_name,jdbcType=VARCHAR}, #{gender,jdbcType=CHAR}, #{date_of_birth,jdbcType=DATE}, 
+      #{profile_picture,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{postal_code,jdbcType=VARCHAR}, #{country,jdbcType=VARCHAR}, 
+      #{created_at,jdbcType=TIMESTAMP}, #{updated_at,jdbcType=TIMESTAMP}, #{bio,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.hospital.mbg.model.UserProfiles" useGeneratedKeys="true">
+    insert into user_profiles
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="user_id != null">
+        user_id,
+      </if>
+      <if test="first_name != null">
+        first_name,
+      </if>
+      <if test="last_name != null">
+        last_name,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="date_of_birth != null">
+        date_of_birth,
+      </if>
+      <if test="profile_picture != null">
+        profile_picture,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="postal_code != null">
+        postal_code,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="created_at != null">
+        created_at,
+      </if>
+      <if test="updated_at != null">
+        updated_at,
+      </if>
+      <if test="bio != null">
+        bio,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="user_id != null">
+        #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="first_name != null">
+        #{first_name,jdbcType=VARCHAR},
+      </if>
+      <if test="last_name != null">
+        #{last_name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="date_of_birth != null">
+        #{date_of_birth,jdbcType=DATE},
+      </if>
+      <if test="profile_picture != null">
+        #{profile_picture,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="postal_code != null">
+        #{postal_code,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="created_at != null">
+        #{created_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated_at != null">
+        #{updated_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bio != null">
+        #{bio,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hospital.mbg.model.UserProfilesExample" resultType="java.lang.Long">
+    select count(*) from user_profiles
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_profiles
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=BIGINT},
+      </if>
+      <if test="row.user_id != null">
+        user_id = #{row.user_id,jdbcType=INTEGER},
+      </if>
+      <if test="row.first_name != null">
+        first_name = #{row.first_name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.last_name != null">
+        last_name = #{row.last_name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.gender != null">
+        gender = #{row.gender,jdbcType=CHAR},
+      </if>
+      <if test="row.date_of_birth != null">
+        date_of_birth = #{row.date_of_birth,jdbcType=DATE},
+      </if>
+      <if test="row.profile_picture != null">
+        profile_picture = #{row.profile_picture,jdbcType=VARCHAR},
+      </if>
+      <if test="row.address != null">
+        address = #{row.address,jdbcType=VARCHAR},
+      </if>
+      <if test="row.city != null">
+        city = #{row.city,jdbcType=VARCHAR},
+      </if>
+      <if test="row.state != null">
+        state = #{row.state,jdbcType=VARCHAR},
+      </if>
+      <if test="row.postal_code != null">
+        postal_code = #{row.postal_code,jdbcType=VARCHAR},
+      </if>
+      <if test="row.country != null">
+        country = #{row.country,jdbcType=VARCHAR},
+      </if>
+      <if test="row.created_at != null">
+        created_at = #{row.created_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updated_at != null">
+        updated_at = #{row.updated_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.bio != null">
+        bio = #{row.bio,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update user_profiles
+    set id = #{row.id,jdbcType=BIGINT},
+      user_id = #{row.user_id,jdbcType=INTEGER},
+      first_name = #{row.first_name,jdbcType=VARCHAR},
+      last_name = #{row.last_name,jdbcType=VARCHAR},
+      gender = #{row.gender,jdbcType=CHAR},
+      date_of_birth = #{row.date_of_birth,jdbcType=DATE},
+      profile_picture = #{row.profile_picture,jdbcType=VARCHAR},
+      address = #{row.address,jdbcType=VARCHAR},
+      city = #{row.city,jdbcType=VARCHAR},
+      state = #{row.state,jdbcType=VARCHAR},
+      postal_code = #{row.postal_code,jdbcType=VARCHAR},
+      country = #{row.country,jdbcType=VARCHAR},
+      created_at = #{row.created_at,jdbcType=TIMESTAMP},
+      updated_at = #{row.updated_at,jdbcType=TIMESTAMP},
+      bio = #{row.bio,jdbcType=LONGVARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_profiles
+    set id = #{row.id,jdbcType=BIGINT},
+      user_id = #{row.user_id,jdbcType=INTEGER},
+      first_name = #{row.first_name,jdbcType=VARCHAR},
+      last_name = #{row.last_name,jdbcType=VARCHAR},
+      gender = #{row.gender,jdbcType=CHAR},
+      date_of_birth = #{row.date_of_birth,jdbcType=DATE},
+      profile_picture = #{row.profile_picture,jdbcType=VARCHAR},
+      address = #{row.address,jdbcType=VARCHAR},
+      city = #{row.city,jdbcType=VARCHAR},
+      state = #{row.state,jdbcType=VARCHAR},
+      postal_code = #{row.postal_code,jdbcType=VARCHAR},
+      country = #{row.country,jdbcType=VARCHAR},
+      created_at = #{row.created_at,jdbcType=TIMESTAMP},
+      updated_at = #{row.updated_at,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hospital.mbg.model.UserProfiles">
+    update user_profiles
+    <set>
+      <if test="user_id != null">
+        user_id = #{user_id,jdbcType=INTEGER},
+      </if>
+      <if test="first_name != null">
+        first_name = #{first_name,jdbcType=VARCHAR},
+      </if>
+      <if test="last_name != null">
+        last_name = #{last_name,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="date_of_birth != null">
+        date_of_birth = #{date_of_birth,jdbcType=DATE},
+      </if>
+      <if test="profile_picture != null">
+        profile_picture = #{profile_picture,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="postal_code != null">
+        postal_code = #{postal_code,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="created_at != null">
+        created_at = #{created_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated_at != null">
+        updated_at = #{updated_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bio != null">
+        bio = #{bio,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hospital.mbg.model.UserProfiles">
+    update user_profiles
+    set user_id = #{user_id,jdbcType=INTEGER},
+      first_name = #{first_name,jdbcType=VARCHAR},
+      last_name = #{last_name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      date_of_birth = #{date_of_birth,jdbcType=DATE},
+      profile_picture = #{profile_picture,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      postal_code = #{postal_code,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      created_at = #{created_at,jdbcType=TIMESTAMP},
+      updated_at = #{updated_at,jdbcType=TIMESTAMP},
+      bio = #{bio,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hospital.mbg.model.UserProfiles">
+    update user_profiles
+    set user_id = #{user_id,jdbcType=INTEGER},
+      first_name = #{first_name,jdbcType=VARCHAR},
+      last_name = #{last_name,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=CHAR},
+      date_of_birth = #{date_of_birth,jdbcType=DATE},
+      profile_picture = #{profile_picture,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      postal_code = #{postal_code,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      created_at = #{created_at,jdbcType=TIMESTAMP},
+      updated_at = #{updated_at,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

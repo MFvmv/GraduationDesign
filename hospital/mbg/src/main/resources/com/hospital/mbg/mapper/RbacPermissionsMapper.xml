@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mbg.mapper.RbacPermissionsMapper">
+  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.RbacPermissions">
+    <id column="permission_id" jdbcType="INTEGER" property="permission_id" />
+    <result column="permission_name" jdbcType="VARCHAR" property="permission_name" />
+    <result column="resource" jdbcType="VARCHAR" property="resource" />
+    <result column="action" jdbcType="VARCHAR" property="action" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hospital.mbg.model.RbacPermissions">
+    <result column="description" jdbcType="LONGVARCHAR" property="description" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    permission_id, permission_name, resource, action
+  </sql>
+  <sql id="Blob_Column_List">
+    description
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hospital.mbg.model.RbacPermissionsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from rbac_permissions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hospital.mbg.model.RbacPermissionsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from rbac_permissions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from rbac_permissions
+    where permission_id = #{permission_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from rbac_permissions
+    where permission_id = #{permission_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.RbacPermissionsExample">
+    delete from rbac_permissions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="permission_id" parameterType="com.hospital.mbg.model.RbacPermissions" useGeneratedKeys="true">
+    insert into rbac_permissions (permission_id, permission_name, resource, 
+      action, description)
+    values (#{permission_id,jdbcType=INTEGER}, #{permission_name,jdbcType=VARCHAR}, #{resource,jdbcType=VARCHAR}, 
+      #{action,jdbcType=VARCHAR}, #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="permission_id" parameterType="com.hospital.mbg.model.RbacPermissions" useGeneratedKeys="true">
+    insert into rbac_permissions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permission_id != null">
+        permission_id,
+      </if>
+      <if test="permission_name != null">
+        permission_name,
+      </if>
+      <if test="resource != null">
+        resource,
+      </if>
+      <if test="action != null">
+        action,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permission_id != null">
+        #{permission_id,jdbcType=INTEGER},
+      </if>
+      <if test="permission_name != null">
+        #{permission_name,jdbcType=VARCHAR},
+      </if>
+      <if test="resource != null">
+        #{resource,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null">
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hospital.mbg.model.RbacPermissionsExample" resultType="java.lang.Long">
+    select count(*) from rbac_permissions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update rbac_permissions
+    <set>
+      <if test="row.permission_id != null">
+        permission_id = #{row.permission_id,jdbcType=INTEGER},
+      </if>
+      <if test="row.permission_name != null">
+        permission_name = #{row.permission_name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.resource != null">
+        resource = #{row.resource,jdbcType=VARCHAR},
+      </if>
+      <if test="row.action != null">
+        action = #{row.action,jdbcType=VARCHAR},
+      </if>
+      <if test="row.description != null">
+        description = #{row.description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update rbac_permissions
+    set permission_id = #{row.permission_id,jdbcType=INTEGER},
+      permission_name = #{row.permission_name,jdbcType=VARCHAR},
+      resource = #{row.resource,jdbcType=VARCHAR},
+      action = #{row.action,jdbcType=VARCHAR},
+      description = #{row.description,jdbcType=LONGVARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update rbac_permissions
+    set permission_id = #{row.permission_id,jdbcType=INTEGER},
+      permission_name = #{row.permission_name,jdbcType=VARCHAR},
+      resource = #{row.resource,jdbcType=VARCHAR},
+      action = #{row.action,jdbcType=VARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hospital.mbg.model.RbacPermissions">
+    update rbac_permissions
+    <set>
+      <if test="permission_name != null">
+        permission_name = #{permission_name,jdbcType=VARCHAR},
+      </if>
+      <if test="resource != null">
+        resource = #{resource,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null">
+        action = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where permission_id = #{permission_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hospital.mbg.model.RbacPermissions">
+    update rbac_permissions
+    set permission_name = #{permission_name,jdbcType=VARCHAR},
+      resource = #{resource,jdbcType=VARCHAR},
+      action = #{action,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where permission_id = #{permission_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hospital.mbg.model.RbacPermissions">
+    update rbac_permissions
+    set permission_name = #{permission_name,jdbcType=VARCHAR},
+      resource = #{resource,jdbcType=VARCHAR},
+      action = #{action,jdbcType=VARCHAR}
+    where permission_id = #{permission_id,jdbcType=INTEGER}
+  </update>
+</mapper>

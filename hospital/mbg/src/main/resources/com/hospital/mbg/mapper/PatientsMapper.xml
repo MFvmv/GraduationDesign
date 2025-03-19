@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mbg.mapper.PatientsMapper">
+  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.Patients">
+    <id column="PatientID" jdbcType="INTEGER" property="PatientID" />
+    <result column="Name" jdbcType="VARCHAR" property="Name" />
+    <result column="Gender" jdbcType="CHAR" property="Gender" />
+    <result column="DateOfBirth" jdbcType="DATE" property="DateOfBirth" />
+    <result column="ContactNumber" jdbcType="VARCHAR" property="ContactNumber" />
+    <result column="EmergencyContact" jdbcType="VARCHAR" property="EmergencyContact" />
+    <result column="CreatedAt" jdbcType="TIMESTAMP" property="CreatedAt" />
+    <result column="id_card_number" jdbcType="VARCHAR" property="id_card_number" />
+    <result column="id_card_type" jdbcType="CHAR" property="id_card_type" />
+    <result column="id_card_expiry" jdbcType="DATE" property="id_card_expiry" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hospital.mbg.model.Patients">
+    <result column="Address" jdbcType="LONGVARCHAR" property="Address" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    PatientID, Name, Gender, DateOfBirth, ContactNumber, EmergencyContact, CreatedAt, 
+    id_card_number, id_card_type, id_card_expiry
+  </sql>
+  <sql id="Blob_Column_List">
+    Address
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hospital.mbg.model.PatientsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from patients
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hospital.mbg.model.PatientsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from patients
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from patients
+    where PatientID = #{PatientID,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from patients
+    where PatientID = #{PatientID,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.PatientsExample">
+    delete from patients
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="PatientID" parameterType="com.hospital.mbg.model.Patients" useGeneratedKeys="true">
+    insert into patients (PatientID, Name, Gender, 
+      DateOfBirth, ContactNumber, EmergencyContact, 
+      CreatedAt, id_card_number, id_card_type, 
+      id_card_expiry, Address)
+    values (#{PatientID,jdbcType=INTEGER}, #{Name,jdbcType=VARCHAR}, #{Gender,jdbcType=CHAR}, 
+      #{DateOfBirth,jdbcType=DATE}, #{ContactNumber,jdbcType=VARCHAR}, #{EmergencyContact,jdbcType=VARCHAR}, 
+      #{CreatedAt,jdbcType=TIMESTAMP}, #{id_card_number,jdbcType=VARCHAR}, #{id_card_type,jdbcType=CHAR}, 
+      #{id_card_expiry,jdbcType=DATE}, #{Address,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" keyProperty="PatientID" parameterType="com.hospital.mbg.model.Patients" useGeneratedKeys="true">
+    insert into patients
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="PatientID != null">
+        PatientID,
+      </if>
+      <if test="Name != null">
+        Name,
+      </if>
+      <if test="Gender != null">
+        Gender,
+      </if>
+      <if test="DateOfBirth != null">
+        DateOfBirth,
+      </if>
+      <if test="ContactNumber != null">
+        ContactNumber,
+      </if>
+      <if test="EmergencyContact != null">
+        EmergencyContact,
+      </if>
+      <if test="CreatedAt != null">
+        CreatedAt,
+      </if>
+      <if test="id_card_number != null">
+        id_card_number,
+      </if>
+      <if test="id_card_type != null">
+        id_card_type,
+      </if>
+      <if test="id_card_expiry != null">
+        id_card_expiry,
+      </if>
+      <if test="Address != null">
+        Address,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="PatientID != null">
+        #{PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="Name != null">
+        #{Name,jdbcType=VARCHAR},
+      </if>
+      <if test="Gender != null">
+        #{Gender,jdbcType=CHAR},
+      </if>
+      <if test="DateOfBirth != null">
+        #{DateOfBirth,jdbcType=DATE},
+      </if>
+      <if test="ContactNumber != null">
+        #{ContactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="EmergencyContact != null">
+        #{EmergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="CreatedAt != null">
+        #{CreatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="id_card_number != null">
+        #{id_card_number,jdbcType=VARCHAR},
+      </if>
+      <if test="id_card_type != null">
+        #{id_card_type,jdbcType=CHAR},
+      </if>
+      <if test="id_card_expiry != null">
+        #{id_card_expiry,jdbcType=DATE},
+      </if>
+      <if test="Address != null">
+        #{Address,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hospital.mbg.model.PatientsExample" resultType="java.lang.Long">
+    select count(*) from patients
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update patients
+    <set>
+      <if test="row.PatientID != null">
+        PatientID = #{row.PatientID,jdbcType=INTEGER},
+      </if>
+      <if test="row.Name != null">
+        Name = #{row.Name,jdbcType=VARCHAR},
+      </if>
+      <if test="row.Gender != null">
+        Gender = #{row.Gender,jdbcType=CHAR},
+      </if>
+      <if test="row.DateOfBirth != null">
+        DateOfBirth = #{row.DateOfBirth,jdbcType=DATE},
+      </if>
+      <if test="row.ContactNumber != null">
+        ContactNumber = #{row.ContactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="row.EmergencyContact != null">
+        EmergencyContact = #{row.EmergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="row.CreatedAt != null">
+        CreatedAt = #{row.CreatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.id_card_number != null">
+        id_card_number = #{row.id_card_number,jdbcType=VARCHAR},
+      </if>
+      <if test="row.id_card_type != null">
+        id_card_type = #{row.id_card_type,jdbcType=CHAR},
+      </if>
+      <if test="row.id_card_expiry != null">
+        id_card_expiry = #{row.id_card_expiry,jdbcType=DATE},
+      </if>
+      <if test="row.Address != null">
+        Address = #{row.Address,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update patients
+    set PatientID = #{row.PatientID,jdbcType=INTEGER},
+      Name = #{row.Name,jdbcType=VARCHAR},
+      Gender = #{row.Gender,jdbcType=CHAR},
+      DateOfBirth = #{row.DateOfBirth,jdbcType=DATE},
+      ContactNumber = #{row.ContactNumber,jdbcType=VARCHAR},
+      EmergencyContact = #{row.EmergencyContact,jdbcType=VARCHAR},
+      CreatedAt = #{row.CreatedAt,jdbcType=TIMESTAMP},
+      id_card_number = #{row.id_card_number,jdbcType=VARCHAR},
+      id_card_type = #{row.id_card_type,jdbcType=CHAR},
+      id_card_expiry = #{row.id_card_expiry,jdbcType=DATE},
+      Address = #{row.Address,jdbcType=LONGVARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update patients
+    set PatientID = #{row.PatientID,jdbcType=INTEGER},
+      Name = #{row.Name,jdbcType=VARCHAR},
+      Gender = #{row.Gender,jdbcType=CHAR},
+      DateOfBirth = #{row.DateOfBirth,jdbcType=DATE},
+      ContactNumber = #{row.ContactNumber,jdbcType=VARCHAR},
+      EmergencyContact = #{row.EmergencyContact,jdbcType=VARCHAR},
+      CreatedAt = #{row.CreatedAt,jdbcType=TIMESTAMP},
+      id_card_number = #{row.id_card_number,jdbcType=VARCHAR},
+      id_card_type = #{row.id_card_type,jdbcType=CHAR},
+      id_card_expiry = #{row.id_card_expiry,jdbcType=DATE}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hospital.mbg.model.Patients">
+    update patients
+    <set>
+      <if test="Name != null">
+        Name = #{Name,jdbcType=VARCHAR},
+      </if>
+      <if test="Gender != null">
+        Gender = #{Gender,jdbcType=CHAR},
+      </if>
+      <if test="DateOfBirth != null">
+        DateOfBirth = #{DateOfBirth,jdbcType=DATE},
+      </if>
+      <if test="ContactNumber != null">
+        ContactNumber = #{ContactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="EmergencyContact != null">
+        EmergencyContact = #{EmergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="CreatedAt != null">
+        CreatedAt = #{CreatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="id_card_number != null">
+        id_card_number = #{id_card_number,jdbcType=VARCHAR},
+      </if>
+      <if test="id_card_type != null">
+        id_card_type = #{id_card_type,jdbcType=CHAR},
+      </if>
+      <if test="id_card_expiry != null">
+        id_card_expiry = #{id_card_expiry,jdbcType=DATE},
+      </if>
+      <if test="Address != null">
+        Address = #{Address,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where PatientID = #{PatientID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hospital.mbg.model.Patients">
+    update patients
+    set Name = #{Name,jdbcType=VARCHAR},
+      Gender = #{Gender,jdbcType=CHAR},
+      DateOfBirth = #{DateOfBirth,jdbcType=DATE},
+      ContactNumber = #{ContactNumber,jdbcType=VARCHAR},
+      EmergencyContact = #{EmergencyContact,jdbcType=VARCHAR},
+      CreatedAt = #{CreatedAt,jdbcType=TIMESTAMP},
+      id_card_number = #{id_card_number,jdbcType=VARCHAR},
+      id_card_type = #{id_card_type,jdbcType=CHAR},
+      id_card_expiry = #{id_card_expiry,jdbcType=DATE},
+      Address = #{Address,jdbcType=LONGVARCHAR}
+    where PatientID = #{PatientID,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hospital.mbg.model.Patients">
+    update patients
+    set Name = #{Name,jdbcType=VARCHAR},
+      Gender = #{Gender,jdbcType=CHAR},
+      DateOfBirth = #{DateOfBirth,jdbcType=DATE},
+      ContactNumber = #{ContactNumber,jdbcType=VARCHAR},
+      EmergencyContact = #{EmergencyContact,jdbcType=VARCHAR},
+      CreatedAt = #{CreatedAt,jdbcType=TIMESTAMP},
+      id_card_number = #{id_card_number,jdbcType=VARCHAR},
+      id_card_type = #{id_card_type,jdbcType=CHAR},
+      id_card_expiry = #{id_card_expiry,jdbcType=DATE}
+    where PatientID = #{PatientID,jdbcType=INTEGER}
+  </update>
+</mapper>
