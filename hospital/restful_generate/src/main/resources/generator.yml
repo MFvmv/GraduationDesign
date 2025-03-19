@@ -1,0 +1,36 @@
+mysql:
+  generatorList:
+    - appointments
+    - drugconsumption
+    - druginventory
+    - financialrecords
+    - financialrecords_drugconsumption_relation
+    - financialrecords_inpatients_relation
+    - financialrecords_medicalrecords_relation
+    - inpatients
+    - medicalrecords
+    - patients
+    - hospitalbeds
+  contractor:
+    generatorList:
+      - appointments
+      - druginventory
+      - drugconsumption
+      - financialrecords
+      - inpatients
+      - medicalrecords
+      - patients
+      - hospitalbeds
+    generatorDtoExcludeField:
+      appointments: [AppointmentID] #挂号与预约表
+      druginventory: [DrugID,LastUpdated] #药品库存管理表
+      drugconsumption: [ConsumptionID,LastUpdated] #药品消耗记录表
+      financialrecords: [TransactionID,TransactionDate] #财务管理表
+      inpatients: [InpatientID] #住院管理表
+      hospitalbeds: [BedID,LastUpdated] #病床管理表
+      medicalrecords: [RecordID,RecordDate] #病历管理表
+      patients: [PatientID, CreatedAt] #病人信息表
+
+es:
+  tables:
+    - patients: EsPatients

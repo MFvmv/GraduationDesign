@@ -1,0 +1,264 @@
+// ${table.comment} API 模块
+
+import {haveSameKeys,request} from '../common/common.js';
+
+const model = {}
+
+#set($lowerFirstChar = $entity.substring(0, 1).toLowerCase())
+#set($remainingChars = $entity.substring(1))
+#set($FirstWordLower = $lowerFirstChar + $remainingChars)
+#set($idName = '')
+
+#set($sethasEsTable=false)
+#if($esTables.size()>0)
+    #foreach($entry in $esTables.entrySet())
+        #if($entry.key == $table.name && !$sethasEsTable)
+export const esTableSearchField = [
+            #foreach($item in $entry.value)
+                "${item}",
+            #end
+]
+Object.assign(model,{esTableSearchField});
+            #set($sethasEsTable=true)
+        #end
+    #end
+#end
+
+#if($sethasEsTable)
+export const hasEsTable = true
+#else
+export const hasEsTable = false
+#end
+
+/**
+ * 默认的 ${table.entityName} 对象
+ */
+export const Fields = {
+#foreach($field in $table.fields)
+    #set($tmp = $field.name.substring(0, 1).toLowerCase()+$field.name.substring(1))
+    #if($field.keyFlag)
+        #set($idName = $tmp)
+    #end
+    ${tmp}: null, // ${field.comment}
+#end
+};
+
+export const FieldsInfo = {
+#foreach($field in $table.fields)
+        #set($tmp = $field.name.substring(0, 1).toLowerCase()+$field.name.substring(1))
+    ${tmp}:{
+        jdbcType:"${field.columnType}",
+        isNullable:${field.metaInfo.nullable},
+        #if($field.metaInfo.defaultValue)
+        defaultValue:"${field.metaInfo.defaultValue}",
+        #else
+        defaultValue:undefined,
+        #end
+        type:{
+            columnType:"${TableFieldInfo[$table.name][$field.name].columnType}",
+            columnDefinition:"${TableFieldInfo[$table.name][$field.name].columnDefinition}"
+        }
+    },
+#end
+}
+
+export const FieldsName = {
+#foreach($field in $table.fields)
+    #set($tmp = $field.name.substring(0, 1).toLowerCase()+$field.name.substring(1))
+    ${tmp}: "${field.comment}",
+#end
+}
+
+export const PrimaryKey = "${idName}";
+
+/**
+ * 获取 ${table.entityName} 列表
+ */
+const standardURL = "/RESTful/standard/${FirstWordLower}";
+const readerURL = "/RESTful/reader/${FirstWordLower}";
+
+//---------------------------------------reader---------------------------------
+export function list({pageSize=null,pageNum=null}={}) {
+    return request({
+        url: readerURL+"/list",
+        method: 'get',
+        params:{
+            pageSize:pageSize,
+            pageNum:pageNum
+        }
+    });
+}
+
+export function searchByField(value,{field=null,pageSize=null,pageNum=null}={}) {
+    if(value===undefined) throw Error("必填参数未传入");
+    return request({
+        url: readerURL+"/searchByField",
+        method: 'get',
+        params:{
+            value:value,
+            field:field,
+            pageSize:pageSize,
+            pageNum:pageNum
+        }
+    });
+}
+#set($hasContractor=false)
+#foreach($key in $CPJson.keySet())
+    #if($key.toLowerCase().indexOf($table.name.toLowerCase()) != -1)
+        #set($hasContractor=true)
+    #end
+#end
+export const hasContractor = ${hasContractor}
+#if($hasContractor)
+//---------------------------------------contractor---------------------------------
+const contractorURL = "/RESTful/contractor/${FirstWordLower}";
+export const contractorFields = {
+    #foreach($field in $table.fields)
+        #set($tmp = $field.name.substring(0, 1).toLowerCase()+$field.name.substring(1))
+        #set($isWriter = true)
+        #if($excludeField[$table.name])
+            #foreach($item in $excludeField[$table.name])
+                #if($field.name == $item)
+                    #set($isWriter = false)
+                    #break
+                #end
+            #end
+        #end
+        #if($isWriter)
+    ${tmp}: null, // ${field.comment}
+        #end
+    #end
+};
+export const contractorExcludeField = {
+    #if($excludeField[$table.name])
+        #foreach($item in $excludeField[$table.name])
+            #set($tmp = $item.substring(0, 1).toLowerCase()+$item.substring(1))
+            ${tmp}:null,
+        #end
+    #end
+};
+
+export const contractorParam = {
+    #foreach($key in $CPJson.keySet())
+        #if($key.toLowerCase().substring(1).indexOf($table.name.toLowerCase()) == 0)
+           ${key}: ${CPJson.get($key)},
+        #end
+    #end
+}
+
+/**
+ * 添加 ${table.entityName}
+ */
+export function contractor_create(data,params={}) {
+    if(data===undefined) throw Error("必填参数未传入");
+    return request({
+        url: contractorURL,
+        method: 'post',
+        data:data,
+        params:params
+    });
+}
+
+/**
+ * 更新 ${table.entityName}
+ */
+export function contractor_update(id,data,params={}) {
+    if(id===undefined || data===undefined) throw Error("必填参数未传入");
+    return request({
+        url: contractorURL+"/"+id,
+        method: 'put',
+        data:data,
+        params:params
+    });
+}
+
+/**
+ * 删除 ${table.entityName}
+ */
+export function contractor_delete(id){
+    if(id===undefined) throw Error("必填参数未传入");
+    return request({
+        url: standardURL+"/"+id,
+        method: 'delete'
+    });
+}
+#end
+//---------------------------------------standard---------------------------------
+export function getAll() {
+    return request({
+        url: standardURL,
+        method: 'get'
+    });
+}
+
+export function getById(id) {
+    if(id===undefined) throw Error("必填参数未传入");
+    return request({
+        url: standardURL+"/"+id,
+        method: 'get'
+    });
+}
+
+/**
+ * 添加 ${table.entityName}
+ */
+export function create(data) {
+    if(!haveSameKeys(data,Fields)){
+        throw new Error("${table.entityName}的create请求数据结构不一致！");
+    }
+    data.${idName} = null;
+    return request({
+        url: standardURL,
+        method: 'post',
+        data:data
+    });
+}
+
+/**
+ * 更新 ${table.entityName}
+ */
+export function update(id,data) {
+    if(id===undefined || data===undefined) throw Error("必填参数未传入");
+    if(!haveSameKeys(data,Fields)){
+        throw new Error("${table.entityName}的update请求数据结构不一致！");
+    }
+    return request({
+        url: standardURL+"/"+id,
+        method: 'put',
+        data:data
+    });
+}
+
+/**
+ * 删除 ${table.entityName}
+ */
+export function _delete(id){
+    if(id===undefined) throw Error("必填参数未传入");
+    return request({
+        url: standardURL+"/"+id,
+        method: 'delete'
+    });
+}
+Object.assign(model,{
+    hasEsTable,
+    Fields,
+    FieldsInfo,
+    FieldsName,
+    PrimaryKey,
+    hasContractor,
+    #if($hasContractor)
+    contractorFields,
+    contractorExcludeField,
+    contractorParam,
+    contractor_create,
+    contractor_update,
+    contractor_delete,
+    #end
+    list,
+    searchByField,
+    getById,
+    create,
+    update,
+    _delete
+});
+export default model;
