@@ -15,7 +15,7 @@ http://8.138.45.155/admin/ (公网IP)
 ├── hospital      # 后端服务 (Spring Boot)
 └── management    # 管理端前端 (Vue + Element Plus)
 ```
-> **注意：** 客户端（Uni-app）尚未开发
+> **注意：** 客户端（Uni-app）开发中
 
 ---
 
