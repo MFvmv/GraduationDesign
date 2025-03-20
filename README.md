@@ -43,7 +43,7 @@ http://8.138.45.155/admin/ (公网IP)
 - **Vue Router**：路由管理
 - **Vue Form Craft**：表单构建
 
-#### 客户端（开发中）(management)
+#### 客户端（开发中）(customer)
 - **Uni-app**：跨平台前端框架
 ---
 
