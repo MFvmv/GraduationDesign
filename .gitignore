@@ -6,7 +6,7 @@ hospital/admin/src/main/resources
 hospital/externalservice/src/main/resources
 hospital/restful/src/main/resources
 hospital/test/src/main/resources
-
+README.md
 # 忽略整个目录（如果需要）
 node_modules/
 temp/

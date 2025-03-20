@@ -1,0 +1,62 @@
+docker run -p 8080:8080 --name admin \
+  --network hospital-network \
+  -v /etc/localtime:/etc/localtime \
+  -v /mydata/app/admin/config:/config \
+  -v /mydata/app/admin/logs:/var/logs \
+  -d hospital/admin:0.0.1-SNAPSHOT
+
+docker run -p 8080:8080 --name test \
+  --network hospital-network \
+  -v /etc/localtime:/etc/localtime \
+  -v /mydata/app/mall-tiny-docker/logs:/var/logs \
+  -d hospital/test:0.0.1-SNAPSHOT
+
+
+docker run -p 3306:3306 --name mysql \
+  --network hospital-network \
+  --network-alias db \
+  -v /mydata/mysql/log:/var/log/mysql \
+  -v /mydata/mysql/data:/var/lib/mysql \
+  -e MYSQL_ROOT_PASSWORD=root \
+  -d mysql:8.0
+
+docker run -p 6379:6379 --name redis \
+--network hospital-network \
+-v /mydata/redis/data:/data \
+-d redis:3.0 redis-server --appendonly yes
+
+docker run -p 9200:9200 -p 9300:9300 --name elasticsearch \
+--network hospital-network \
+-e "discovery.type=single-node" \
+-e "cluster.name=elasticsearch" \
+-e "ES_JAVA_OPTS=-Xms512m -Xmx1024m" \
+-v /mydata/elasticsearch/plugins:/usr/share/elasticsearch/plugins \
+-v /mydata/elasticsearch/data:/usr/share/elasticsearch/data \
+-d docker.elastic.co/elasticsearch/elasticsearch:7.17.3
+
+docker run -p 80:80 --name nginx \
+-v /mydata/nginx/html:/usr/share/nginx/html \
+-v /mydata/nginx/logs:/var/log/nginx \
+-v /mydata/nginx/conf:/etc/nginx \
+-d nginx
+
+docker run -p 80:80 --name nginx \
+-v /mydata/nginx/html:/usr/share/nginx/html \
+-v /mydata/nginx/logs:/var/log/nginx  \
+-d nginx
+
+server {
+    listen       80;
+    server_name  mf-graduationdesign-hospital-management.asia; #修改域名
+
+    location / {
+        root   /usr/share/nginx/html/admin; #代理到admin文件夹中
+        index  index.html index.htm;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+}
