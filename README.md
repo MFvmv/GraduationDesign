@@ -42,8 +42,9 @@ http://8.138.45.155/admin/ (公网IP)
 - **Vuex**：状态管理
 - **Vue Router**：路由管理
 - **Vue Form Craft**：表单构建
-- **Uni-app**：客户端（待开发）
 
+#### 客户端（开发中）(management)
+- **Uni-app**：跨平台前端框架
 ---
 
 ## 后端文件结构 (`hospital`)
