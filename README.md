@@ -13,8 +13,8 @@ http://8.138.45.155/admin/ (公网IP)
 ## 目录结构
 ```
 ├── hospital      # 后端服务 (Spring Boot)
-└── management    # 管理端前端 (Vue + Element Plus)
-└── deployment    # 服务器部署相关文件
+├── management    # 管理端前端 (Vue + Element Plus)
+├── deployment    # 服务器部署相关文件
 └── resources     # hospital后端服务的配置文件
 ```
 > **注意：** 客户端（Uni-app）开发中
