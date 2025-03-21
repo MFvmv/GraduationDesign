@@ -119,17 +119,18 @@ src
 ### 后端启动
 1. 克隆项目：
    ```bash
-   git clone https://github.com/username/hospital-management-system.git
+   git clone https://github.com/MFvmv/GraduationDesign.git
    cd hospital
    ```
 2. 配置环境：
-   - 修改 `application.yml` 中的数据库和Redis连接信息
+   - 修改 resources 中的数据库和Redis连接信息
    - 配置阿里云OSS和支付宝沙箱支付参数
 3. 构建并运行：
    ```bash
    mvn clean package
    java -jar target/hospital.jar
    ```
+   最好用idea去运行和构建
 
 ### 前端启动 (管理端)
 1. 进入管理端文件夹：
