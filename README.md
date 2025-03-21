@@ -66,7 +66,7 @@ hospital
 - **externalservice**：对接外部服务模块，如阿里云OSS、支付宝沙箱支付等。  
 - **mbg**：使用MyBatis Generator生成的基础代码，减少开发工作量。  
 - **restful**：RESTful API接口实现，提供对外服务能力。  
-- **restful_generate**：基于**MyBatis-Plus**和**Velocity**自动生成的RESTful API模块，减少手动代码量。  
+- **restful_generate**：基于**MyBatis-Plus**和**Velocity**自动生成的RESTful API模块和前端js接口文件，减少手动代码量。  
 - **search**：集成**Elasticsearch**，提供全文检索和数据查询能力。 ***(因服务器内存过小暂停服务)***
 - **security**：使用**Spring Security**实现身份认证和权限管理，确保系统安全性。  
 
