@@ -3,7 +3,8 @@
 本项目是一个基于**Spring Boot**和**Vue**的医院信息管理系统，包含**管理端**和**客户端**两部分，旨在为医院提供高效的信息管理和便捷的客户端服务。
 ## 管理端的地址
 http://mf-graduationdesign-hospital-management.asia (管局审核中) <br>
-http://8.138.45.155/ (公网IP)
+http://8.138.45.155/ (公网IP 管理端) <br>
+http://8.138.45.155:8080/swagger-ui/index.html (swagger API 文档)
 |        | 账号 | 密码|支付密码|
 | ------ | ------ | ------ |------ |
 | 测试登录      | admin1 |123456|
@@ -66,7 +67,7 @@ hospital
 - **externalservice**：对接外部服务模块，如阿里云OSS、支付宝沙箱支付等。  
 - **mbg**：使用MyBatis Generator生成的基础代码，减少开发工作量。  
 - **restful**：RESTful API接口实现，提供对外服务能力。  
-- **restful_generate**：基于**MyBatis-Plus**和**Velocity**自动生成的RESTful API模块，减少手动代码量。  
+- **restful_generate**：基于**MyBatis-Plus**和**Velocity**自动生成的RESTful API模块和前端js接口文件，减少手动代码量。  
 - **search**：集成**Elasticsearch**，提供全文检索和数据查询能力。 ***(因服务器内存过小暂停服务)***
 - **security**：使用**Spring Security**实现身份认证和权限管理，确保系统安全性。  
 
@@ -118,17 +119,18 @@ src
 ### 后端启动
 1. 克隆项目：
    ```bash
-   git clone https://github.com/username/hospital-management-system.git
+   git clone https://github.com/MFvmv/GraduationDesign.git
    cd hospital
    ```
 2. 配置环境：
-   - 修改 `application.yml` 中的数据库和Redis连接信息
+   - 修改 resources 中的数据库和Redis连接信息
    - 配置阿里云OSS和支付宝沙箱支付参数
 3. 构建并运行：
    ```bash
    mvn clean package
    java -jar target/hospital.jar
    ```
+   最好用idea去运行和构建
 
 ### 前端启动 (管理端)
 1. 进入管理端文件夹：
