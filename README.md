@@ -3,7 +3,8 @@
 本项目是一个基于**Spring Boot**和**Vue**的医院信息管理系统，包含**管理端**和**客户端**两部分，旨在为医院提供高效的信息管理和便捷的客户端服务。
 ## 管理端的地址
 http://mf-graduationdesign-hospital-management.asia (管局审核中) <br>
-http://8.138.45.155/ (公网IP)
+http://8.138.45.155/ (公网IP 管理端)
+http://8.138.45.155:8080/swagger-ui/index.html (swagger API 文档)
 |        | 账号 | 密码|支付密码|
 | ------ | ------ | ------ |------ |
 | 测试登录      | admin1 |123456|
