@@ -3,7 +3,7 @@
 本项目是一个基于**Spring Boot**和**Vue**的医院信息管理系统，包含**管理端**和**客户端**两部分，旨在为医院提供高效的信息管理和便捷的客户端服务。
 ## 管理端的地址
 http://mf-graduationdesign-hospital-management.asia (管局审核中) <br>
-http://8.138.45.155/admin/ (公网IP)
+http://8.138.45.155/ (公网IP)
 |        | 账号 | 密码|支付密码|
 | ------ | ------ | ------ |------ |
 | 测试登录      | admin1 |123456|
@@ -13,7 +13,9 @@ http://8.138.45.155/admin/ (公网IP)
 ## 目录结构
 ```
 ├── hospital      # 后端服务 (Spring Boot)
-└── management    # 管理端前端 (Vue + Element Plus)
+├── management    # 管理端前端 (Vue + Element Plus)
+├── deployment    # 服务器部署相关文件
+└── resources     # hospital后端服务的配置文件
 ```
 > **注意：** 客户端（Uni-app）开发中
 
@@ -40,8 +42,9 @@ http://8.138.45.155/admin/ (公网IP)
 - **Vuex**：状态管理
 - **Vue Router**：路由管理
 - **Vue Form Craft**：表单构建
-- **Uni-app**：客户端（待开发）
 
+#### 客户端（开发中）(customer)
+- **Uni-app**：跨平台前端框架
 ---
 
 ## 后端文件结构 (`hospital`)
@@ -54,10 +57,7 @@ hospital
 ├── restful              # RESTful API 实现模块
 ├── restful_generate     # 使用 MyBatis-Plus 和 Velocity 生成 RESTful API
 ├── search               # Elasticsearch 搜索功能模块
-├── security             # 安全模块，包含认证和权限管理
-├── .gitignore           # Git忽略文件配置
-├── LICENSE              # 许可证文件
-└── pom.xml              # Maven 项目配置文件
+└── security             # 安全模块，包含认证和权限管理
 ```
 
 #### 说明
@@ -188,7 +188,7 @@ src
 
 ## 未来规划
 - [ ] 开发客户端 (Uni-app)
-- [ ] 添加更多支付方式
+- [ ] 添加更多支付方式（需营业执照）
 - [ ] 引入消息推送和实时通知
 
 ---
