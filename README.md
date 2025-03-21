@@ -57,10 +57,7 @@ hospital
 ├── restful              # RESTful API 实现模块
 ├── restful_generate     # 使用 MyBatis-Plus 和 Velocity 生成 RESTful API
 ├── search               # Elasticsearch 搜索功能模块
-├── security             # 安全模块，包含认证和权限管理
-├── .gitignore           # Git忽略文件配置
-├── LICENSE              # 许可证文件
-└── pom.xml              # Maven 项目配置文件
+└── security             # 安全模块，包含认证和权限管理
 ```
 
 #### 说明
