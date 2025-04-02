@@ -1,6 +1,6 @@
-package com.hospital.restful.modules.contractor.domain;
+package com.hospital.restful.modules.contractor.dto;
 
-import com.hospital.restful.modules.contractor.dto.CDrugconsumptionParam;
+import com.hospital.restful.modules.contractor.domain.CDrugconsumptionParam;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

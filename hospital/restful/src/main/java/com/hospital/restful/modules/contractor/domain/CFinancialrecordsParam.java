@@ -1,9 +1,9 @@
-package com.hospital.restful.modules.contractor.dto;
+package com.hospital.restful.modules.contractor.domain;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import java.util.Date;
+
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;

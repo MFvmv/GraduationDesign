@@ -1,6 +1,6 @@
 package com.hospital.restful.modules.contractor.service.impl;
 import com.hospital.mbg.model.HospitalbedsExample;
-import com.hospital.restful.modules.contractor.dto.CHospitalbedsParam;
+import com.hospital.restful.modules.contractor.domain.CHospitalbedsParam;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.hospital.restful.modules.contractor.service.CHospitalbedsService;

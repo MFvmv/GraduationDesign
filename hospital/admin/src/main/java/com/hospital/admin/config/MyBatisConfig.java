@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableTransactionManagement
-@MapperScan({"com.hospital.admin.dao","com.hospital.search.dao","com.hospital.mbg.mapper","com.hospital.externalservice.dao","com.hospital.restful.dao"})
+@MapperScan({"com.hospital.admin.dao","com.hospital.mbg.mapper","com.hospital.externalservice.dao","com.hospital.restful.dao"})
 public class MyBatisConfig {
 
 }

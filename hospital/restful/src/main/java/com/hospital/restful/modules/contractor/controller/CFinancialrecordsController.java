@@ -2,8 +2,7 @@ package com.hospital.restful.modules.contractor.controller;
 
 
 import com.hospital.externalservice.domain.AliPayParam;
-import com.hospital.restful.modules.contractor.dto.CFinancialrecordsParam;
-import io.swagger.annotations.ApiParam;
+import com.hospital.restful.modules.contractor.domain.CFinancialrecordsParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;

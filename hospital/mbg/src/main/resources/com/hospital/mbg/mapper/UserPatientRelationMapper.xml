@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hospital.mbg.mapper.FinancialsummaryMapper">
-  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.Financialsummary">
-    <result column="病人唯一标识" jdbcType="INTEGER" property="病人唯一标识" />
-    <result column="支付总额" jdbcType="DECIMAL" property="支付总额" />
-    <result column="总交易次数" jdbcType="BIGINT" property="总交易次数" />
+<mapper namespace="com.hospital.mbg.mapper.UserPatientRelationMapper">
+  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.UserPatientRelation">
+    <id column="user_id" jdbcType="INTEGER" property="user_id" />
+    <id column="patient_id" jdbcType="INTEGER" property="patient_id" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,15 +64,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    病人唯一标识, 支付总额, 总交易次数
+    user_id, patient_id
   </sql>
-  <select id="selectByExample" parameterType="com.hospital.mbg.model.FinancialsummaryExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.hospital.mbg.model.UserPatientRelationExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from financialsummary
+    from user_patient_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -81,60 +80,54 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.FinancialsummaryExample">
-    delete from financialsummary
+  <delete id="deleteByPrimaryKey" parameterType="map">
+    delete from user_patient_relation
+    where user_id = #{user_id,jdbcType=INTEGER}
+      and patient_id = #{patient_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.UserPatientRelationExample">
+    delete from user_patient_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hospital.mbg.model.Financialsummary">
-    insert into financialsummary (病人唯一标识, 支付总额, 总交易次数
-      )
-    values (#{病人唯一标识,jdbcType=INTEGER}, #{支付总额,jdbcType=DECIMAL}, #{总交易次数,jdbcType=BIGINT}
-      )
+  <insert id="insert" parameterType="com.hospital.mbg.model.UserPatientRelation">
+    insert into user_patient_relation (user_id, patient_id)
+    values (#{user_id,jdbcType=INTEGER}, #{patient_id,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.hospital.mbg.model.Financialsummary">
-    insert into financialsummary
+  <insert id="insertSelective" parameterType="com.hospital.mbg.model.UserPatientRelation">
+    insert into user_patient_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="病人唯一标识 != null">
-        病人唯一标识,
+      <if test="user_id != null">
+        user_id,
       </if>
-      <if test="支付总额 != null">
-        支付总额,
-      </if>
-      <if test="总交易次数 != null">
-        总交易次数,
+      <if test="patient_id != null">
+        patient_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="病人唯一标识 != null">
-        #{病人唯一标识,jdbcType=INTEGER},
+      <if test="user_id != null">
+        #{user_id,jdbcType=INTEGER},
       </if>
-      <if test="支付总额 != null">
-        #{支付总额,jdbcType=DECIMAL},
-      </if>
-      <if test="总交易次数 != null">
-        #{总交易次数,jdbcType=BIGINT},
+      <if test="patient_id != null">
+        #{patient_id,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hospital.mbg.model.FinancialsummaryExample" resultType="java.lang.Long">
-    select count(*) from financialsummary
+  <select id="countByExample" parameterType="com.hospital.mbg.model.UserPatientRelationExample" resultType="java.lang.Long">
+    select count(*) from user_patient_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update financialsummary
+    update user_patient_relation
     <set>
-      <if test="row.病人唯一标识 != null">
-        病人唯一标识 = #{row.病人唯一标识,jdbcType=INTEGER},
+      <if test="row.user_id != null">
+        user_id = #{row.user_id,jdbcType=INTEGER},
       </if>
-      <if test="row.支付总额 != null">
-        支付总额 = #{row.支付总额,jdbcType=DECIMAL},
-      </if>
-      <if test="row.总交易次数 != null">
-        总交易次数 = #{row.总交易次数,jdbcType=BIGINT},
+      <if test="row.patient_id != null">
+        patient_id = #{row.patient_id,jdbcType=INTEGER},
       </if>
     </set>
     <if test="example != null">
@@ -142,10 +135,9 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update financialsummary
-    set 病人唯一标识 = #{row.病人唯一标识,jdbcType=INTEGER},
-      支付总额 = #{row.支付总额,jdbcType=DECIMAL},
-      总交易次数 = #{row.总交易次数,jdbcType=BIGINT}
+    update user_patient_relation
+    set user_id = #{row.user_id,jdbcType=INTEGER},
+      patient_id = #{row.patient_id,jdbcType=INTEGER}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

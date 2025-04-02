@@ -1,12 +1,11 @@
-package com.hospital.restful.modules.contractor.domain;
+package com.hospital.restful.modules.contractor.dto;
 
 import com.hospital.restful.modules.contractor.annotations.ValidFinancialRecords;
-import com.hospital.restful.modules.contractor.dto.CMedicalrecordsParam;
+import com.hospital.restful.modules.contractor.domain.CInpatientsParam;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -16,10 +15,10 @@ import javax.validation.constraints.NotNull;
 @Data
 @EqualsAndHashCode
 @ValidFinancialRecords  // 添加自定义校验注解
-public class CCMedicalrecordsMixParam {
+public class CCInpatientsMixParam {
   @NotNull
   @ApiModelProperty(value = "住院管理参数对象",required = true)
-  private CMedicalrecordsParam medicalrecordsParam;
+  private CInpatientsParam inpatientsParam;
 
   @ApiModelProperty(value = "财务参数对象，用于创建新的财务表行,为null默认不创建", required = false)
   private CFinancialrecordsMinParam financialrecordsParam;

@@ -1,5 +1,5 @@
 package com.hospital.restful.modules.contractor.service.impl;
-import com.hospital.restful.modules.contractor.dto.CPatientsParam;
+import com.hospital.restful.modules.contractor.domain.CPatientsParam;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.hospital.restful.modules.contractor.service.CPatientsService;

@@ -6,68 +6,87 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Appointments implements Serializable {
-    @ApiModelProperty(value = "挂号唯一标识")
-    private Integer AppointmentID;
+public class Doctors implements Serializable {
+    @ApiModelProperty(value = "医生唯一标识")
+    private Integer DoctorID;
 
-    @ApiModelProperty(value = "病人唯一标识（外键）")
-    private Integer PatientID;
+    @ApiModelProperty(value = "医生姓名")
+    private String Name;
 
-    @ApiModelProperty(value = "预约日期")
-    private Date AppointmentDate;
+    @ApiModelProperty(value = "性别")
+    private String Gender;
 
-    @ApiModelProperty(value = "就诊时段（上午 / 下午）")
-    private String AppointmentSession;
+    @ApiModelProperty(value = "联系方式")
+    private String Phone;
 
-    @ApiModelProperty(value = "预约状态")
-    private String Status;
+    @ApiModelProperty(value = "电子邮件")
+    private String Email;
+
+    @ApiModelProperty(value = "所属科室")
+    private String Department;
+
+    @ApiModelProperty(value = "专业方向")
+    private String Specialization;
 
     @ApiModelProperty(value = "创建时间")
     private Date CreatedAt;
 
-    @ApiModelProperty(value = "医生唯一标识（外键）")
-    private Integer DoctorID;
-
     private static final long serialVersionUID = 1L;
 
-    public Integer getAppointmentID() {
-        return AppointmentID;
+    public Integer getDoctorID() {
+        return DoctorID;
     }
 
-    public void setAppointmentID(Integer AppointmentID) {
-        this.AppointmentID = AppointmentID;
+    public void setDoctorID(Integer DoctorID) {
+        this.DoctorID = DoctorID;
     }
 
-    public Integer getPatientID() {
-        return PatientID;
+    public String getName() {
+        return Name;
     }
 
-    public void setPatientID(Integer PatientID) {
-        this.PatientID = PatientID;
+    public void setName(String Name) {
+        this.Name = Name;
     }
 
-    public Date getAppointmentDate() {
-        return AppointmentDate;
+    public String getGender() {
+        return Gender;
     }
 
-    public void setAppointmentDate(Date AppointmentDate) {
-        this.AppointmentDate = AppointmentDate;
+    public void setGender(String Gender) {
+        this.Gender = Gender;
     }
 
-    public String getAppointmentSession() {
-        return AppointmentSession;
+    public String getPhone() {
+        return Phone;
     }
 
-    public void setAppointmentSession(String AppointmentSession) {
-        this.AppointmentSession = AppointmentSession;
+    public void setPhone(String Phone) {
+        this.Phone = Phone;
     }
 
-    public String getStatus() {
-        return Status;
+    public String getEmail() {
+        return Email;
     }
 
-    public void setStatus(String Status) {
-        this.Status = Status;
+    public void setEmail(String Email) {
+        this.Email = Email;
+    }
+
+    public String getDepartment() {
+        return Department;
+    }
+
+    public void setDepartment(String Department) {
+        this.Department = Department;
+    }
+
+    public String getSpecialization() {
+        return Specialization;
+    }
+
+    public void setSpecialization(String Specialization) {
+        this.Specialization = Specialization;
     }
 
     public Date getCreatedAt() {
@@ -78,40 +97,34 @@ public class Appointments implements Serializable {
         this.CreatedAt = CreatedAt;
     }
 
-    public Integer getDoctorID() {
-        return DoctorID;
-    }
-
-    public void setDoctorID(Integer DoctorID) {
-        this.DoctorID = DoctorID;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", AppointmentID=").append(AppointmentID);
-        sb.append(", PatientID=").append(PatientID);
-        sb.append(", AppointmentDate=").append(AppointmentDate);
-        sb.append(", AppointmentSession=").append(AppointmentSession);
-        sb.append(", Status=").append(Status);
-        sb.append(", CreatedAt=").append(CreatedAt);
         sb.append(", DoctorID=").append(DoctorID);
+        sb.append(", Name=").append(Name);
+        sb.append(", Gender=").append(Gender);
+        sb.append(", Phone=").append(Phone);
+        sb.append(", Email=").append(Email);
+        sb.append(", Department=").append(Department);
+        sb.append(", Specialization=").append(Specialization);
+        sb.append(", CreatedAt=").append(CreatedAt);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }
 
     public static enum Column {
-        AppointmentID("AppointmentID", "AppointmentID", "INTEGER", false),
-        PatientID("PatientID", "PatientID", "INTEGER", false),
-        AppointmentDate("AppointmentDate", "AppointmentDate", "DATE", false),
-        AppointmentSession("AppointmentSession", "AppointmentSession", "CHAR", false),
-        Status("Status", "Status", "CHAR", false),
-        CreatedAt("CreatedAt", "CreatedAt", "TIMESTAMP", false),
-        DoctorID("DoctorID", "DoctorID", "INTEGER", false);
+        DoctorID("DoctorID", "DoctorID", "INTEGER", false),
+        Name("Name", "Name", "VARCHAR", false),
+        Gender("Gender", "Gender", "CHAR", false),
+        Phone("Phone", "Phone", "VARCHAR", false),
+        Email("Email", "Email", "VARCHAR", false),
+        Department("Department", "Department", "VARCHAR", false),
+        Specialization("Specialization", "Specialization", "VARCHAR", false),
+        CreatedAt("CreatedAt", "CreatedAt", "TIMESTAMP", false);
 
         private static final String BEGINNING_DELIMITER = "`";
 

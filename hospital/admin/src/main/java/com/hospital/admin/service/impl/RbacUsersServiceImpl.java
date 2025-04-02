@@ -143,7 +143,6 @@ public class RbacUsersServiceImpl implements RbacUsersService {
         return rbacUsersMapper.selectByPrimaryKey(id);
     }
 
-
     @Override
     public void logout(String username) {
         //清空缓存中的用户相关数据

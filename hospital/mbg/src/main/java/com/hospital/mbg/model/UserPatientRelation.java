@@ -2,42 +2,32 @@ package com.hospital.mbg.model;
 
 import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class Financialsummary implements Serializable {
-    @ApiModelProperty(value = "病人唯一标识（外键）")
-    private Integer 病人唯一标识;
+public class UserPatientRelation implements Serializable {
+    @ApiModelProperty(value = "用户唯一标识，关联rbac_users表")
+    private Integer user_id;
 
-    private BigDecimal 支付总额;
-
-    private Long 总交易次数;
+    @ApiModelProperty(value = "病人唯一标识，关联patients表")
+    private Integer patient_id;
 
     private static final long serialVersionUID = 1L;
 
-    public Integer get病人唯一标识() {
-        return 病人唯一标识;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void set病人唯一标识(Integer 病人唯一标识) {
-        this.病人唯一标识 = 病人唯一标识;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
-    public BigDecimal get支付总额() {
-        return 支付总额;
+    public Integer getPatient_id() {
+        return patient_id;
     }
 
-    public void set支付总额(BigDecimal 支付总额) {
-        this.支付总额 = 支付总额;
-    }
-
-    public Long get总交易次数() {
-        return 总交易次数;
-    }
-
-    public void set总交易次数(Long 总交易次数) {
-        this.总交易次数 = 总交易次数;
+    public void setPatient_id(Integer patient_id) {
+        this.patient_id = patient_id;
     }
 
     @Override
@@ -46,18 +36,16 @@ public class Financialsummary implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", 病人唯一标识=").append(病人唯一标识);
-        sb.append(", 支付总额=").append(支付总额);
-        sb.append(", 总交易次数=").append(总交易次数);
+        sb.append(", user_id=").append(user_id);
+        sb.append(", patient_id=").append(patient_id);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
     }
 
     public static enum Column {
-        病人唯一标识("病人唯一标识", "病人唯一标识", "INTEGER", false),
-        支付总额("支付总额", "支付总额", "DECIMAL", false),
-        总交易次数("总交易次数", "总交易次数", "BIGINT", false);
+        user_id("user_id", "user_id", "INTEGER", false),
+        patient_id("patient_id", "patient_id", "INTEGER", false);
 
         private static final String BEGINNING_DELIMITER = "`";
 

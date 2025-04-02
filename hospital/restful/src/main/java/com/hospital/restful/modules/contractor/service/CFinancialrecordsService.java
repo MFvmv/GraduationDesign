@@ -1,7 +1,7 @@
 package com.hospital.restful.modules.contractor.service;
 
 import com.hospital.externalservice.domain.AliPayParam;
-import com.hospital.restful.modules.contractor.dto.CFinancialrecordsParam;
+import com.hospital.restful.modules.contractor.domain.CFinancialrecordsParam;
 
 /**
  * <p>

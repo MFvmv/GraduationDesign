@@ -1,6 +1,6 @@
 package com.hospital.restful.modules.contractor.controller;
 
-import com.hospital.restful.modules.contractor.dto.CHospitalbedsParam;
+import com.hospital.restful.modules.contractor.domain.CHospitalbedsParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;

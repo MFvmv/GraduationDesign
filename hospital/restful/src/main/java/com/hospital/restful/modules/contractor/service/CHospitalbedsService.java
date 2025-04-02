@@ -1,6 +1,6 @@
 package com.hospital.restful.modules.contractor.service;
 
-import com.hospital.restful.modules.contractor.dto.CHospitalbedsParam;
+import com.hospital.restful.modules.contractor.domain.CHospitalbedsParam;
 
 /**
  * <p>

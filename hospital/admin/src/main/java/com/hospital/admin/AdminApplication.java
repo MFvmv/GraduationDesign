@@ -1,17 +1,15 @@
 package com.hospital.admin;
 
-import org.mybatis.spring.annotation.MapperScan;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
-import com.hospital.common.config.CustomFilter;
+import org.springframework.context.ApplicationContext;
+
 
 @SpringBootApplication(scanBasePackages = {"com.hospital.admin.config"})
 public class AdminApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AdminApplication.class, args);
-
+        ApplicationContext context = SpringApplication.run(AdminApplication.class, args);
     }
 
 }

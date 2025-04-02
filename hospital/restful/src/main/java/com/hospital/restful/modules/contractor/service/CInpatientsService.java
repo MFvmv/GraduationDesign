@@ -1,8 +1,8 @@
 package com.hospital.restful.modules.contractor.service;
 
-import com.hospital.restful.modules.contractor.domain.CCInpatientsMixParam;
-import com.hospital.restful.modules.contractor.domain.CUInpatientsMixParam;
-import com.hospital.restful.modules.contractor.dto.CInpatientsParam;
+import com.hospital.restful.modules.contractor.dto.CCInpatientsMixParam;
+import com.hospital.restful.modules.contractor.dto.CUInpatientsMixParam;
+import com.hospital.restful.modules.contractor.domain.CInpatientsParam;
 
 /**
  * <p>

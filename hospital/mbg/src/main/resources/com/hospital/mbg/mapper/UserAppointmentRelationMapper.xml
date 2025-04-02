@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.hospital.mbg.mapper.PatientsummaryMapper">
-  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.Patientsummary">
-    <result column="病人唯一标识" jdbcType="INTEGER" property="病人唯一标识" />
-    <result column="病人姓名" jdbcType="VARCHAR" property="病人姓名" />
-    <result column="总挂号次数" jdbcType="BIGINT" property="总挂号次数" />
-    <result column="总住院次数" jdbcType="BIGINT" property="总住院次数" />
+<mapper namespace="com.hospital.mbg.mapper.UserAppointmentRelationMapper">
+  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.UserAppointmentRelation">
+    <id column="appointment_id" jdbcType="INTEGER" property="appointment_id" />
+    <result column="user_id" jdbcType="INTEGER" property="user_id" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,15 +64,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    病人唯一标识, 病人姓名, 总挂号次数, 总住院次数
+    appointment_id, user_id
   </sql>
-  <select id="selectByExample" parameterType="com.hospital.mbg.model.PatientsummaryExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.hospital.mbg.model.UserAppointmentRelationExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from patientsummary
+    from user_appointment_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -82,69 +80,59 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.PatientsummaryExample">
-    delete from patientsummary
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_appointment_relation
+    where appointment_id = #{appointment_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_appointment_relation
+    where appointment_id = #{appointment_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.UserAppointmentRelationExample">
+    delete from user_appointment_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.hospital.mbg.model.Patientsummary">
-    insert into patientsummary (病人唯一标识, 病人姓名, 总挂号次数, 
-      总住院次数)
-    values (#{病人唯一标识,jdbcType=INTEGER}, #{病人姓名,jdbcType=VARCHAR}, #{总挂号次数,jdbcType=BIGINT}, 
-      #{总住院次数,jdbcType=BIGINT})
+  <insert id="insert" keyProperty="appointment_id" parameterType="com.hospital.mbg.model.UserAppointmentRelation" useGeneratedKeys="true">
+    insert into user_appointment_relation (appointment_id, user_id)
+    values (#{appointment_id,jdbcType=INTEGER}, #{user_id,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.hospital.mbg.model.Patientsummary">
-    insert into patientsummary
+  <insert id="insertSelective" keyProperty="appointment_id" parameterType="com.hospital.mbg.model.UserAppointmentRelation" useGeneratedKeys="true">
+    insert into user_appointment_relation
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="病人唯一标识 != null">
-        病人唯一标识,
+      <if test="appointment_id != null">
+        appointment_id,
       </if>
-      <if test="病人姓名 != null">
-        病人姓名,
-      </if>
-      <if test="总挂号次数 != null">
-        总挂号次数,
-      </if>
-      <if test="总住院次数 != null">
-        总住院次数,
+      <if test="user_id != null">
+        user_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="病人唯一标识 != null">
-        #{病人唯一标识,jdbcType=INTEGER},
+      <if test="appointment_id != null">
+        #{appointment_id,jdbcType=INTEGER},
       </if>
-      <if test="病人姓名 != null">
-        #{病人姓名,jdbcType=VARCHAR},
-      </if>
-      <if test="总挂号次数 != null">
-        #{总挂号次数,jdbcType=BIGINT},
-      </if>
-      <if test="总住院次数 != null">
-        #{总住院次数,jdbcType=BIGINT},
+      <if test="user_id != null">
+        #{user_id,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.hospital.mbg.model.PatientsummaryExample" resultType="java.lang.Long">
-    select count(*) from patientsummary
+  <select id="countByExample" parameterType="com.hospital.mbg.model.UserAppointmentRelationExample" resultType="java.lang.Long">
+    select count(*) from user_appointment_relation
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update patientsummary
+    update user_appointment_relation
     <set>
-      <if test="row.病人唯一标识 != null">
-        病人唯一标识 = #{row.病人唯一标识,jdbcType=INTEGER},
+      <if test="row.appointment_id != null">
+        appointment_id = #{row.appointment_id,jdbcType=INTEGER},
       </if>
-      <if test="row.病人姓名 != null">
-        病人姓名 = #{row.病人姓名,jdbcType=VARCHAR},
-      </if>
-      <if test="row.总挂号次数 != null">
-        总挂号次数 = #{row.总挂号次数,jdbcType=BIGINT},
-      </if>
-      <if test="row.总住院次数 != null">
-        总住院次数 = #{row.总住院次数,jdbcType=BIGINT},
+      <if test="row.user_id != null">
+        user_id = #{row.user_id,jdbcType=INTEGER},
       </if>
     </set>
     <if test="example != null">
@@ -152,13 +140,25 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update patientsummary
-    set 病人唯一标识 = #{row.病人唯一标识,jdbcType=INTEGER},
-      病人姓名 = #{row.病人姓名,jdbcType=VARCHAR},
-      总挂号次数 = #{row.总挂号次数,jdbcType=BIGINT},
-      总住院次数 = #{row.总住院次数,jdbcType=BIGINT}
+    update user_appointment_relation
+    set appointment_id = #{row.appointment_id,jdbcType=INTEGER},
+      user_id = #{row.user_id,jdbcType=INTEGER}
     <if test="example != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hospital.mbg.model.UserAppointmentRelation">
+    update user_appointment_relation
+    <set>
+      <if test="user_id != null">
+        user_id = #{user_id,jdbcType=INTEGER},
+      </if>
+    </set>
+    where appointment_id = #{appointment_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hospital.mbg.model.UserAppointmentRelation">
+    update user_appointment_relation
+    set user_id = #{user_id,jdbcType=INTEGER}
+    where appointment_id = #{appointment_id,jdbcType=INTEGER}
   </update>
 </mapper>

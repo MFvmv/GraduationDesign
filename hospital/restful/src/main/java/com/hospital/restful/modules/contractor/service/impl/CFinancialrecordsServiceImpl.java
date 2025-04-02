@@ -6,7 +6,7 @@ import com.hospital.externalservice.domain.AliPayParam;
 import com.hospital.mbg.mapper.AlipaytransactionsMapper;
 import com.hospital.mbg.model.Alipaytransactions;
 import com.hospital.mbg.model.AlipaytransactionsExample;
-import com.hospital.restful.modules.contractor.dto.CFinancialrecordsParam;
+import com.hospital.restful.modules.contractor.domain.CFinancialrecordsParam;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.hospital.restful.modules.contractor.service.CFinancialrecordsService;

@@ -1,6 +1,6 @@
 package com.hospital.restful.modules.contractor.service;
 
-import com.hospital.restful.modules.contractor.dto.CAppointmentsParam;
+import com.hospital.restful.modules.contractor.domain.CAppointmentsParam;
 
 /**
  * <p>

@@ -1,7 +1,7 @@
 package com.hospital.restful.modules.contractor.controller;
 
-import com.hospital.restful.modules.contractor.domain.CCInpatientsMixParam;
-import com.hospital.restful.modules.contractor.domain.CUInpatientsMixParam;
+import com.hospital.restful.modules.contractor.dto.CCInpatientsMixParam;
+import com.hospital.restful.modules.contractor.dto.CUInpatientsMixParam;
 import com.hospital.restful.modules.contractor.service.CHospitalbedsService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

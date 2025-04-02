@@ -1,6 +1,5 @@
 package ${package.Service};
-import java.util.List;
-import com.hospital.restful.modules.contractor.dto.${entity};
+import com.hospital.restful.modules.contractor.domain.${entity};
 #set($lowerFirstChar = $entity.substring(0, 1).toLowerCase())
 #set($remainingChars = $entity.substring(1))
 #set($FirstWordLower = $lowerFirstChar + $remainingChars)

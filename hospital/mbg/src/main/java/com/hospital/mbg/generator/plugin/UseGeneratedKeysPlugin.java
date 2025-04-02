@@ -22,30 +22,31 @@ public class UseGeneratedKeysPlugin extends PluginAdapter {
         return GeneratedInsertReturnId(element,introspectedTable);
     }
 
-    private boolean GeneratedInsertReturnId(XmlElement element,
-                                            IntrospectedTable introspectedTable){
+    private boolean GeneratedInsertReturnId(XmlElement element, IntrospectedTable introspectedTable){
+        // 增加视图判断，跳过视图表
+        if (introspectedTable.getFullyQualifiedTableNameAtRuntime().toLowerCase().startsWith("view")) {
+            System.out.println("Skipping useGeneratedKeys for view table: "
+                    + introspectedTable.getFullyQualifiedTable());
+            return true;
+        }
         // 获取主键列列表
         List<IntrospectedColumn> pkColumns = introspectedTable.getPrimaryKeyColumns();
         if (pkColumns == null || pkColumns.isEmpty()) {
-            // 如果没有指定主键，则跳过该表的 useGeneratedKeys 配置
             System.out.println("Table " + introspectedTable.getFullyQualifiedTable() +
                     " does not have a primary key defined. Skipping useGeneratedKeys.");
             return true;
         }
-        // 如果有多个主键，建议也跳过或者按业务需求处理
         if (pkColumns.size() > 1) {
             System.out.println("Table " + introspectedTable.getFullyQualifiedTable() +
                     " has multiple primary keys. Skipping useGeneratedKeys.");
             return true;
         }
-        System.out.println(pkColumns.get(0));
-        // 如果只有一个主键，则添加 useGeneratedKeys 和 keyProperty 属性
         IntrospectedColumn pkColumn = pkColumns.get(0);
         element.addAttribute(new Attribute("useGeneratedKeys", "true"));
         element.addAttribute(new Attribute("keyProperty", pkColumn.getJavaProperty()));
-
         return true;
     }
+
 
 
     @Override

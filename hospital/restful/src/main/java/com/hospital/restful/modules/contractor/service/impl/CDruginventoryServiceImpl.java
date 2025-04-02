@@ -1,5 +1,5 @@
 package com.hospital.restful.modules.contractor.service.impl;
-import com.hospital.restful.modules.contractor.dto.CDruginventoryParam;
+import com.hospital.restful.modules.contractor.domain.CDruginventoryParam;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.hospital.restful.modules.contractor.service.CDruginventoryService;

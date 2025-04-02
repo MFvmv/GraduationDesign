@@ -1,4 +1,4 @@
-package com.hospital.restful.modules.contractor.domain;
+package com.hospital.restful.modules.contractor.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

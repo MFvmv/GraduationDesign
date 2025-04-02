@@ -7,10 +7,8 @@ import ${package.Parent}.service.${table.serviceName};
 #set($FirstWordLower = $lowerFirstChar + $remainingChars)
 #set($FirstWordUpper = $table.name.substring(0, 1).toUpperCase() + $remainingChars)
 import com.hospital.mbg.mapper.${FirstWordUpper}Mapper;
-import com.hospital.mbg.model.${FirstWordUpper};
-import com.hospital.restful.modules.contractor.dto.${entity};
-import java.util.List;
-import org.springframework.beans.BeanUtils;
+    ${FirstWordUpper};
+import com.hospital.restful.modules.contractor.domain.${entity};
 ## 只是模板代码，具体业务逻辑需要自行编写
 /**
  * <p>

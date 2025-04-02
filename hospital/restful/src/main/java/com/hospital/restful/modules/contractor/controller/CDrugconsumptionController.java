@@ -1,8 +1,7 @@
 package com.hospital.restful.modules.contractor.controller;
 
-import com.hospital.restful.modules.contractor.domain.CCDrugconsumptionMixParam;
-import com.hospital.restful.modules.contractor.domain.CUDrugconsumptionMixParam;
-import org.springframework.transaction.annotation.Transactional;
+import com.hospital.restful.modules.contractor.dto.CCDrugconsumptionMixParam;
+import com.hospital.restful.modules.contractor.dto.CUDrugconsumptionMixParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;

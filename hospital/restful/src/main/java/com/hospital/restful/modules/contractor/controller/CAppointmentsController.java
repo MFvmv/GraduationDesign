@@ -1,6 +1,6 @@
 package com.hospital.restful.modules.contractor.controller;
 
-import com.hospital.restful.modules.contractor.dto.CAppointmentsParam;
+import com.hospital.restful.modules.contractor.domain.CAppointmentsParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;

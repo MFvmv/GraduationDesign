@@ -175,32 +175,6 @@ public class AppointmentsExample {
             addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
-        protected void addCriterionForJDBCTime(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Time(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCTime(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Time> timeList = new ArrayList<>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                timeList.add(new java.sql.Time(iter.next().getTime()));
-            }
-            addCriterion(condition, timeList, property);
-        }
-
-        protected void addCriterionForJDBCTime(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Time(value1.getTime()), new java.sql.Time(value2.getTime()), property);
-        }
-
         public Criteria andAppointmentIDIsNull() {
             addCriterion("AppointmentID is null");
             return (Criteria) this;
@@ -471,293 +445,103 @@ public class AppointmentsExample {
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeIsNull() {
-            addCriterion("AppointmentTime is null");
+        public Criteria andAppointmentSessionIsNull() {
+            addCriterion("AppointmentSession is null");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeIsNotNull() {
-            addCriterion("AppointmentTime is not null");
+        public Criteria andAppointmentSessionIsNotNull() {
+            addCriterion("AppointmentSession is not null");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeEqualTo(Date value) {
-            addCriterionForJDBCTime("AppointmentTime =", value, "AppointmentTime");
+        public Criteria andAppointmentSessionEqualTo(String value) {
+            addCriterion("AppointmentSession =", value, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("AppointmentTime = ").append(column.getEscapedColumnName()).toString());
+        public Criteria andAppointmentSessionEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("AppointmentSession = ").append(column.getEscapedColumnName()).toString());
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeNotEqualTo(Date value) {
-            addCriterionForJDBCTime("AppointmentTime <>", value, "AppointmentTime");
+        public Criteria andAppointmentSessionNotEqualTo(String value) {
+            addCriterion("AppointmentSession <>", value, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeNotEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("AppointmentTime <> ").append(column.getEscapedColumnName()).toString());
+        public Criteria andAppointmentSessionNotEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("AppointmentSession <> ").append(column.getEscapedColumnName()).toString());
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeGreaterThan(Date value) {
-            addCriterionForJDBCTime("AppointmentTime >", value, "AppointmentTime");
+        public Criteria andAppointmentSessionGreaterThan(String value) {
+            addCriterion("AppointmentSession >", value, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeGreaterThanColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("AppointmentTime > ").append(column.getEscapedColumnName()).toString());
+        public Criteria andAppointmentSessionGreaterThanColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("AppointmentSession > ").append(column.getEscapedColumnName()).toString());
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCTime("AppointmentTime >=", value, "AppointmentTime");
+        public Criteria andAppointmentSessionGreaterThanOrEqualTo(String value) {
+            addCriterion("AppointmentSession >=", value, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeGreaterThanOrEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("AppointmentTime >= ").append(column.getEscapedColumnName()).toString());
+        public Criteria andAppointmentSessionGreaterThanOrEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("AppointmentSession >= ").append(column.getEscapedColumnName()).toString());
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeLessThan(Date value) {
-            addCriterionForJDBCTime("AppointmentTime <", value, "AppointmentTime");
+        public Criteria andAppointmentSessionLessThan(String value) {
+            addCriterion("AppointmentSession <", value, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeLessThanColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("AppointmentTime < ").append(column.getEscapedColumnName()).toString());
+        public Criteria andAppointmentSessionLessThanColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("AppointmentSession < ").append(column.getEscapedColumnName()).toString());
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCTime("AppointmentTime <=", value, "AppointmentTime");
+        public Criteria andAppointmentSessionLessThanOrEqualTo(String value) {
+            addCriterion("AppointmentSession <=", value, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeLessThanOrEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("AppointmentTime <= ").append(column.getEscapedColumnName()).toString());
+        public Criteria andAppointmentSessionLessThanOrEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("AppointmentSession <= ").append(column.getEscapedColumnName()).toString());
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeIn(List<Date> values) {
-            addCriterionForJDBCTime("AppointmentTime in", values, "AppointmentTime");
+        public Criteria andAppointmentSessionLike(String value) {
+            addCriterion("AppointmentSession like", value, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeNotIn(List<Date> values) {
-            addCriterionForJDBCTime("AppointmentTime not in", values, "AppointmentTime");
+        public Criteria andAppointmentSessionNotLike(String value) {
+            addCriterion("AppointmentSession not like", value, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeBetween(Date value1, Date value2) {
-            addCriterionForJDBCTime("AppointmentTime between", value1, value2, "AppointmentTime");
+        public Criteria andAppointmentSessionIn(List<String> values) {
+            addCriterion("AppointmentSession in", values, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andAppointmentTimeNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCTime("AppointmentTime not between", value1, value2, "AppointmentTime");
+        public Criteria andAppointmentSessionNotIn(List<String> values) {
+            addCriterion("AppointmentSession not in", values, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIsNull() {
-            addCriterion("Department is null");
+        public Criteria andAppointmentSessionBetween(String value1, String value2) {
+            addCriterion("AppointmentSession between", value1, value2, "AppointmentSession");
             return (Criteria) this;
         }
 
-        public Criteria andDepartmentIsNotNull() {
-            addCriterion("Department is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentEqualTo(String value) {
-            addCriterion("Department =", value, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("Department = ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentNotEqualTo(String value) {
-            addCriterion("Department <>", value, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentNotEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("Department <> ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentGreaterThan(String value) {
-            addCriterion("Department >", value, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentGreaterThanColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("Department > ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentGreaterThanOrEqualTo(String value) {
-            addCriterion("Department >=", value, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentGreaterThanOrEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("Department >= ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentLessThan(String value) {
-            addCriterion("Department <", value, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentLessThanColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("Department < ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentLessThanOrEqualTo(String value) {
-            addCriterion("Department <=", value, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentLessThanOrEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("Department <= ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentLike(String value) {
-            addCriterion("Department like", value, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentNotLike(String value) {
-            addCriterion("Department not like", value, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIn(List<String> values) {
-            addCriterion("Department in", values, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentNotIn(List<String> values) {
-            addCriterion("Department not in", values, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentBetween(String value1, String value2) {
-            addCriterion("Department between", value1, value2, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentNotBetween(String value1, String value2) {
-            addCriterion("Department not between", value1, value2, "Department");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameIsNull() {
-            addCriterion("DoctorName is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameIsNotNull() {
-            addCriterion("DoctorName is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameEqualTo(String value) {
-            addCriterion("DoctorName =", value, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("DoctorName = ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameNotEqualTo(String value) {
-            addCriterion("DoctorName <>", value, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameNotEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("DoctorName <> ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameGreaterThan(String value) {
-            addCriterion("DoctorName >", value, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameGreaterThanColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("DoctorName > ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameGreaterThanOrEqualTo(String value) {
-            addCriterion("DoctorName >=", value, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameGreaterThanOrEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("DoctorName >= ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameLessThan(String value) {
-            addCriterion("DoctorName <", value, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameLessThanColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("DoctorName < ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameLessThanOrEqualTo(String value) {
-            addCriterion("DoctorName <=", value, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameLessThanOrEqualToColumn(Appointments.Column column) {
-            addCriterion(new StringBuilder("DoctorName <= ").append(column.getEscapedColumnName()).toString());
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameLike(String value) {
-            addCriterion("DoctorName like", value, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameNotLike(String value) {
-            addCriterion("DoctorName not like", value, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameIn(List<String> values) {
-            addCriterion("DoctorName in", values, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameNotIn(List<String> values) {
-            addCriterion("DoctorName not in", values, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameBetween(String value1, String value2) {
-            addCriterion("DoctorName between", value1, value2, "DoctorName");
-            return (Criteria) this;
-        }
-
-        public Criteria andDoctorNameNotBetween(String value1, String value2) {
-            addCriterion("DoctorName not between", value1, value2, "DoctorName");
+        public Criteria andAppointmentSessionNotBetween(String value1, String value2) {
+            addCriterion("AppointmentSession not between", value1, value2, "AppointmentSession");
             return (Criteria) this;
         }
 
@@ -858,6 +642,186 @@ public class AppointmentsExample {
 
         public Criteria andStatusNotBetween(String value1, String value2) {
             addCriterion("Status not between", value1, value2, "Status");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtIsNull() {
+            addCriterion("CreatedAt is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtIsNotNull() {
+            addCriterion("CreatedAt is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtEqualTo(Date value) {
+            addCriterion("CreatedAt =", value, "CreatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("CreatedAt = ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtNotEqualTo(Date value) {
+            addCriterion("CreatedAt <>", value, "CreatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtNotEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("CreatedAt <> ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtGreaterThan(Date value) {
+            addCriterion("CreatedAt >", value, "CreatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtGreaterThanColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("CreatedAt > ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtGreaterThanOrEqualTo(Date value) {
+            addCriterion("CreatedAt >=", value, "CreatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtGreaterThanOrEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("CreatedAt >= ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtLessThan(Date value) {
+            addCriterion("CreatedAt <", value, "CreatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtLessThanColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("CreatedAt < ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtLessThanOrEqualTo(Date value) {
+            addCriterion("CreatedAt <=", value, "CreatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtLessThanOrEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("CreatedAt <= ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtIn(List<Date> values) {
+            addCriterion("CreatedAt in", values, "CreatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtNotIn(List<Date> values) {
+            addCriterion("CreatedAt not in", values, "CreatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtBetween(Date value1, Date value2) {
+            addCriterion("CreatedAt between", value1, value2, "CreatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtNotBetween(Date value1, Date value2) {
+            addCriterion("CreatedAt not between", value1, value2, "CreatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDIsNull() {
+            addCriterion("DoctorID is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDIsNotNull() {
+            addCriterion("DoctorID is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDEqualTo(Integer value) {
+            addCriterion("DoctorID =", value, "DoctorID");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("DoctorID = ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDNotEqualTo(Integer value) {
+            addCriterion("DoctorID <>", value, "DoctorID");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDNotEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("DoctorID <> ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDGreaterThan(Integer value) {
+            addCriterion("DoctorID >", value, "DoctorID");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDGreaterThanColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("DoctorID > ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDGreaterThanOrEqualTo(Integer value) {
+            addCriterion("DoctorID >=", value, "DoctorID");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDGreaterThanOrEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("DoctorID >= ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDLessThan(Integer value) {
+            addCriterion("DoctorID <", value, "DoctorID");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDLessThanColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("DoctorID < ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDLessThanOrEqualTo(Integer value) {
+            addCriterion("DoctorID <=", value, "DoctorID");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDLessThanOrEqualToColumn(Appointments.Column column) {
+            addCriterion(new StringBuilder("DoctorID <= ").append(column.getEscapedColumnName()).toString());
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDIn(List<Integer> values) {
+            addCriterion("DoctorID in", values, "DoctorID");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDNotIn(List<Integer> values) {
+            addCriterion("DoctorID not in", values, "DoctorID");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDBetween(Integer value1, Integer value2) {
+            addCriterion("DoctorID between", value1, value2, "DoctorID");
+            return (Criteria) this;
+        }
+
+        public Criteria andDoctorIDNotBetween(Integer value1, Integer value2) {
+            addCriterion("DoctorID not between", value1, value2, "DoctorID");
             return (Criteria) this;
         }
     }

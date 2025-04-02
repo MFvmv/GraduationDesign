@@ -23,7 +23,7 @@ import java.util.Map;
  * 后台用户管理Controller
  * Created by macro on 2018/4/26.
  */
-@Controller
+@RestController
 @Api(tags = "AdminController")
 @Tag(name = "AdminController", description = "后台用户管理")
 @RequestMapping("/admin")
@@ -36,7 +36,6 @@ public class AdminController {
 
     @ApiOperation(value = "用户注册")
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    @ResponseBody
     public CommonResult register(@Validated @RequestBody RbacUsersParam rbacUsersParam) {
         RbacUsers umsAdmin = rbacUsersService.register(rbacUsersParam);
         if (umsAdmin == null) {
@@ -47,7 +46,6 @@ public class AdminController {
 
     @ApiOperation(value = "登录以后返回token")
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
     public CommonResult login(@Validated @RequestBody RbacUsersParam rbacUsersParam) {
         String token = rbacUsersService.login(rbacUsersParam.getUsername(), rbacUsersParam.getPassword());
         if (token == null) {
@@ -61,21 +59,21 @@ public class AdminController {
 
     @ApiOperation(value = "登出功能")
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    @ResponseBody
     public CommonResult logout(Principal principal) {
         System.out.println("Principal:");
         System.out.println(principal);
         rbacUsersService.logout(principal.getName());
         return CommonResult.success(null);
     }
-    @ApiOperation(value = "test")
-    @RequestMapping(value = "/info", method = RequestMethod.GET)
-    public CommonResult info(){
-        List<RbacPermissions> r = rbacUsersService.getCacheService().getRbacPermissionsList(4);
-        System.out.println("info:");
-        System.out.println(r);
-        return CommonResult.success(null);
-    }
+
+//    @ApiOperation(value = "test")
+//    @RequestMapping(value = "/info", method = RequestMethod.GET)
+//    public CommonResult info(){
+//        List<RbacPermissions> r = rbacUsersService.getCacheService().getRbacPermissionsList(4);
+//        System.out.println("info:");
+//        System.out.println(r);
+//        return CommonResult.success(null);
+//    }
 
 }
 

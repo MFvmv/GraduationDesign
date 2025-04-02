@@ -21,6 +21,10 @@ public class RbacUsersDetails implements UserDetails {
         this.rbacPermissionsList = rbacPermissionsList;
     }
 
+    public RbacUsers getRbacUsers() {
+        return rbacUsers;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         //返回当前用户所拥有的资源

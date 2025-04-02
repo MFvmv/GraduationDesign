@@ -8,11 +8,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import com.hospital.common.api.CommonResult;
-import com.hospital.restful.modules.contractor.dto.${entity};
+import com.hospital.restful.modules.contractor.domain.${entity};
 import ${package.Parent}.service. ${table.serviceName};
-
-import java.util.List;
 
 #set($idType = "")
 #set($idName = "")
