@@ -44,7 +44,7 @@ http://8.138.45.155:8080/swagger-ui/index.html (swagger API 文档)
 - **Vue Router**：路由管理
 - **Vue Form Craft**：表单构建
 
-#### 客户端（开发中）(customer)
+#### 客户端(customer)
 - **Uni-app**：跨平台前端框架
 ---
 
