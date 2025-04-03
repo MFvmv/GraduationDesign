@@ -195,21 +195,6 @@ src
    ```bash
    docker run -d -p 8080:8080 --name hospital-management hospital-management-system
    ```
-3. 配置Nginx代理服务，示例配置：
-   ```
-   server {
-       listen 80;
-       server_name yourdomain.com;
-
-       location / {
-           proxy_pass http://localhost:8080;
-           proxy_set_header Host $host;
-           proxy_set_header X-Real-IP $remote_addr;
-           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-           proxy_set_header X-Forwarded-Proto $scheme;
-       }
-   }
-   ```
 
 ---
 
