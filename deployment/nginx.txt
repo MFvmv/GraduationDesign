@@ -1,0 +1,20 @@
+server {
+    listen       80;
+    server_name  mf-graduationdesign-hospital-management.asia; #修改域名
+    # 根路径重定向到完整 URL
+    location = / {
+        return 301 http://mf-graduationdesign-hospital-management.asia:8080/swagger-ui/index.html;
+    }
+    location /admin {
+        alias  /usr/share/nginx/html/admin; #代理到admin文件夹中
+        index  index.html index.htm;
+    }
+    location /customer  {
+        alias  /usr/share/nginx/html/customer ; #代理到customer文件夹中
+        index  index.html index.htm;
+    }
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}

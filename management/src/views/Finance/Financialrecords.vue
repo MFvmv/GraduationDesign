@@ -20,7 +20,6 @@
       {{isBatchPayment?"取消收款":"支付宝收款"}}
     </el-button>
     <el-button type="success" v-if="isBatchPayment" @click="(isBatchPayment=!isBatchPayment,operateHidden = !operateHidden,batchPayment())">确定支付宝收款</el-button>
-    <el-button type="success" @click="">发送消息到柜台</el-button>
   </template>
 
   <template #__appendOperate__="{scope}">

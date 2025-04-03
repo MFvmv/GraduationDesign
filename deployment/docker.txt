@@ -35,6 +35,7 @@ docker run -p 9200:9200 -p 9300:9300 --name elasticsearch \
 -d docker.elastic.co/elasticsearch/elasticsearch:7.17.3
 
 docker run -p 80:80 --name nginx \
+--network hospital-network \
 -v /mydata/nginx/html:/usr/share/nginx/html \
 -v /mydata/nginx/logs:/var/log/nginx \
 -v /mydata/nginx/conf:/etc/nginx \

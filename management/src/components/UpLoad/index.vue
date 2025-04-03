@@ -145,6 +145,13 @@ export default {
             })
             .catch(() => {
                 ElMessage.info("不起别名")
+                this.listProxy = [{
+                    name:file.name,
+                    label:"",
+                    url:(this.dataObj.host.replace('http://','https://')+'/'+this.dataObj.key)
+                }]
+                this.success(this.listProxy,this.scope)
+                this.$emit('update:fileList',[...this.listProxy])
             })
         },
         handleError(err, file, fileList) {

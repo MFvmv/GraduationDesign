@@ -1,10 +1,7 @@
 package com.hospital.admin.controller;
 
 import com.hospital.admin.bo.RbacUsersDetails;
-import com.hospital.admin.dto.AppointmentDetailsResult;
-import com.hospital.admin.dto.CaseDetailsResult;
-import com.hospital.admin.dto.RbacUsersParam;
-import com.hospital.admin.dto.UserInfoResult;
+import com.hospital.admin.dto.*;
 import com.hospital.admin.service.CustomerService;
 import com.hospital.common.api.CommonResult;
 import io.swagger.annotations.Api;
@@ -82,20 +79,28 @@ public class CustomerController {
     @ApiOperation(value = "用户与病人绑定")
     @RequestMapping(value = "/bindPatient", method = RequestMethod.POST)
     public CommonResult bindPatient(@RequestParam String id_card_number,@ApiIgnore Principal principal) {
-        return customerService.bindPatient(
-                ((RbacUsersDetails)
-                        ((UsernamePasswordAuthenticationToken)
-                                principal).getPrincipal())
-                .getRbacUsers()
-                .getUser_id()
-                ,id_card_number);
+        return customerService.bindPatient(principal,id_card_number);
     }
 
-    @ApiOperation(value = "客户端用户信息功能")
+    @ApiOperation(value = "获得预约登录账号预约列表")
     @RequestMapping(value = "/appointmentList", method = RequestMethod.GET)
     public CommonResult<List<AppointmentDetailsResult>> getAppointmentList(@ApiIgnore Principal principal){
         List<AppointmentDetailsResult> list = customerService.getAppointmentList(principal.getName());
         return CommonResult.success(list);
+    }
+
+    @ApiOperation(value = "添加预约")
+    @RequestMapping(value = "/addAppointment", method = RequestMethod.POST)
+    public CommonResult addAppointment(@ApiIgnore Principal principal,@RequestBody AddAppointmentParam addAppointmentParam){
+        return customerService.addAppointment(principal,addAppointmentParam);
+    }
+
+    @ApiOperation(value = "获得医生的信息")
+    @RequestMapping(value = "/getDoctorsInfo", method = RequestMethod.GET)
+    public CommonResult getDoctorsInfo(){
+        List<DoctorsInfoResult> list = customerService.getDoctorsInfo();
+        if(list == null) return  CommonResult.failed("获取医生信息失败");
+        return CommonResult.success(list,"获取医生信息成功");
     }
 
     @ApiOperation(value = "客户端用户信息功能")

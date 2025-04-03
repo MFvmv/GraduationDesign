@@ -1,25 +1,20 @@
 package com.hospital.admin.service.impl;
 
-import com.hospital.admin.dao.AppointmentDao;
-import com.hospital.admin.dao.MedicalrecordsDao;
-import com.hospital.admin.dao.RbacRolesDao;
-import com.hospital.admin.dao.UserPatientRelationDao;
-import com.hospital.admin.dto.AppointmentDetailsResult;
-import com.hospital.admin.dto.CaseDetailsResult;
-import com.hospital.admin.dto.RbacUsersParam;
-import com.hospital.admin.dto.UserInfoResult;
+import com.hospital.admin.bo.RbacUsersDetails;
+import com.hospital.admin.dao.*;
+import com.hospital.admin.dto.*;
 import com.hospital.admin.service.CustomerService;
 import com.hospital.admin.service.RbacUsersService;
 import com.hospital.common.api.CommonResult;
-import com.hospital.mbg.mapper.PatientsMapper;
-import com.hospital.mbg.mapper.RbacUserRoleRelationMapper;
-import com.hospital.mbg.mapper.UserPatientRelationMapper;
+import com.hospital.mbg.mapper.*;
 import com.hospital.mbg.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service
@@ -39,8 +34,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private AppointmentDao appointmentDao;
     @Autowired
+    private AppointmentsMapper appointmentsMapper;
+    @Autowired
+    private UserAppointmentRelationMapper userAppointmentRelationMapper;
+    @Autowired
     private MedicalrecordsDao medicalrecordsDao;
-
+    @Autowired
+    private DoctorsDao doctorsDao;
 
     @Override
     @Transactional
@@ -92,8 +92,17 @@ public class CustomerServiceImpl implements CustomerService {
         return list;
     }
 
+    private Integer getUserID(Principal principal){
+        return  ((RbacUsersDetails)
+                ((UsernamePasswordAuthenticationToken)
+                        principal).getPrincipal())
+                .getRbacUsers()
+                .getUser_id();
+    }
+
     @Override
-    public CommonResult bindPatient(Integer user_id,String id_card_number) {
+    public CommonResult bindPatient(Principal principal,String id_card_number) {
+        Integer user_id = getUserID(principal);
         PatientsExample example = new PatientsExample();
         example.createCriteria().andId_card_numberEqualTo(id_card_number);
         List<Patients> patients = patientsMapper.selectByExample(example);
@@ -116,6 +125,35 @@ public class CustomerServiceImpl implements CustomerService {
         int r = userPatientRelationMapper.insert(upr);
         if(r>0) return CommonResult.success("用户绑定病人信息创建成功");
         return  CommonResult.failed("用户绑定病人信息创建失败");
+    }
+
+    @Override
+    @Transactional
+    public CommonResult addAppointment(Principal principal, AddAppointmentParam addAppointmentParam) {
+        Integer user_id = getUserID(principal);
+        UserPatientRelationExample example = new UserPatientRelationExample();
+        example.createCriteria().andUser_idEqualTo(user_id);
+        List<UserPatientRelation> list = userPatientRelationMapper.selectByExample(example);
+        Appointments appointments = new Appointments();
+        if(list.size()>0) appointments.setPatientID(list.get(0).getPatient_id());
+        appointments.setAppointmentDate(addAppointmentParam.getAppointmentDate());
+        appointments.setAppointmentSession(addAppointmentParam.getAppointmentSession());
+        appointments.setDoctorID(addAppointmentParam.getDoctorID());
+        if(appointmentsMapper.insertSelective(appointments)<=0) return CommonResult.failed("添加失败");
+        UserAppointmentRelation userAppointmentRelation = new UserAppointmentRelation();
+        userAppointmentRelation.setAppointment_id(appointments.getAppointmentID());
+        userAppointmentRelation.setUser_id(user_id);
+        if(userAppointmentRelationMapper.insert(userAppointmentRelation)<=0){
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return CommonResult.failed("添加失败");
+        }
+        return  CommonResult.success(null,"添加成功");
+    }
+
+    @Override
+    public List<DoctorsInfoResult> getDoctorsInfo() {
+        List<DoctorsInfoResult> list = doctorsDao.getInfo();
+        return list;
     }
 
 

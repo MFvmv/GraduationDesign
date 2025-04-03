@@ -1,12 +1,10 @@
 package com.hospital.admin.service;
 
-import com.hospital.admin.dto.AppointmentDetailsResult;
-import com.hospital.admin.dto.CaseDetailsResult;
-import com.hospital.admin.dto.RbacUsersParam;
-import com.hospital.admin.dto.UserInfoResult;
+import com.hospital.admin.dto.*;
 import com.hospital.common.api.CommonResult;
 import com.hospital.mbg.model.RbacUsers;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface CustomerService {
@@ -22,5 +20,9 @@ public interface CustomerService {
 
     List<CaseDetailsResult> getCaseList(String name);
 
-    CommonResult bindPatient(Integer user_id,String id_card_number);
+    CommonResult bindPatient(Principal principal, String id_card_number);
+
+    CommonResult addAppointment(Principal principal, AddAppointmentParam addAppointmentParam);
+
+    List<DoctorsInfoResult> getDoctorsInfo();
 }

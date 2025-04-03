@@ -9,7 +9,21 @@ export const getAppointmentList = () => {
   })
 }
 
+export const addAppointment = (data) => {
+  return request({
+    url: baseURL + '/addAppointment',
+    method: 'POST',
+    data
+  })
+}
 
+export const getDoctorsInfo = (data) => {
+  return request({
+    url: baseURL + '/getDoctorsInfo',
+    method: 'GET',
+    data
+  })
+}
 export const getCaseList = () => {
   return request({
     url: baseURL + '/caseList',

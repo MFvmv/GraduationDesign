@@ -244,7 +244,7 @@ methods: {
    }
    else ElMessage.error("查询关联财务ID失败")
    this.upateInitialValues = r
-   this.dialogVisibleUpdate = true
+   this.dialogVisiUleUpdate = true
   },
   async handleSubmitUpdate(newValue,oldValue){
      const r = diffObjects(oldValue[this.firstFloorKey],newValue[this.firstFloorKey],{mode:'new'})

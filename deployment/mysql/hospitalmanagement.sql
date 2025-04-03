@@ -11,7 +11,7 @@
  Target Server Version : 80020 (8.0.20)
  File Encoding         : 65001
 
- Date: 15/03/2025 01:10:39
+ Date: 03/04/2025 21:24:24
 */
 
 SET NAMES utf8mb4;
@@ -28,13 +28,14 @@ CREATE TABLE `alipaytransactions`  (
   `TradeStatus` enum('待付款','已关闭','已成功','已结束') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '待付款' COMMENT '交易状态',
   PRIMARY KEY (`AlipayTransactionID`) USING BTREE,
   UNIQUE INDEX `Unique_Transaction_Order`(`OrderNumber` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '支付宝交易记录表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '支付宝交易记录表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of alipaytransactions
 -- ----------------------------
 INSERT INTO `alipaytransactions` VALUES (1, 'alipay:6', 500.00, '待付款');
 INSERT INTO `alipaytransactions` VALUES (3, 'alipay:26', 200.00, '待付款');
+INSERT INTO `alipaytransactions` VALUES (4, 'alipay:27', 200.00, '待付款');
 
 -- ----------------------------
 -- Table structure for appointments
@@ -42,24 +43,65 @@ INSERT INTO `alipaytransactions` VALUES (3, 'alipay:26', 200.00, '待付款');
 DROP TABLE IF EXISTS `appointments`;
 CREATE TABLE `appointments`  (
   `AppointmentID` int NOT NULL AUTO_INCREMENT COMMENT '挂号唯一标识',
-  `PatientID` int NOT NULL COMMENT '病人唯一标识（外键）',
+  `PatientID` int NULL DEFAULT NULL COMMENT '病人唯一标识（外键）',
   `AppointmentDate` date NOT NULL COMMENT '预约日期',
-  `AppointmentTime` time NOT NULL COMMENT '预约时间',
-  `Department` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '科室',
-  `DoctorName` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '医生姓名',
-  `Status` enum('已计划','已完成','取消') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '已计划' COMMENT '预约状态',
+  `AppointmentSession` enum('上午','下午') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '就诊时段（上午 / 下午）',
+  `Status` enum('已计划','已完成','取消','已过时') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT '已计划' COMMENT '预约状态',
+  `CreatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `DoctorID` int NOT NULL COMMENT '医生唯一标识（外键）',
   PRIMARY KEY (`AppointmentID`) USING BTREE,
   INDEX `PatientID`(`PatientID` ASC) USING BTREE,
   INDEX `date`(`AppointmentDate` DESC) USING BTREE,
-  CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`PatientID`) REFERENCES `patients` (`PatientID`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '挂号与预约表' ROW_FORMAT = Dynamic;
+  INDEX `idx_doctor_id`(`DoctorID` ASC) USING BTREE,
+  CONSTRAINT `appointments_ibfk_1` FOREIGN KEY (`PatientID`) REFERENCES `patients` (`PatientID`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  CONSTRAINT `fk_doctor_id` FOREIGN KEY (`DoctorID`) REFERENCES `doctors` (`DoctorID`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '挂号与预约表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of appointments
 -- ----------------------------
-INSERT INTO `appointments` VALUES (1, 1, '2025-01-20', '09:30:00', '内科', '张医生', '已计划');
-INSERT INTO `appointments` VALUES (2, 2, '2025-01-21', '10:00:00', '妇科', '李医生', '已完成');
-INSERT INTO `appointments` VALUES (3, 3, '2025-01-22', '14:00:00', '骨科', '王医生', '取消');
+INSERT INTO `appointments` VALUES (4, 1, '2025-03-28', '上午', '已计划', '2025-03-26 00:42:29', 1);
+INSERT INTO `appointments` VALUES (5, 2, '2025-03-28', '上午', '已完成', '2025-03-26 00:42:29', 2);
+INSERT INTO `appointments` VALUES (6, 3, '2025-03-29', '上午', '取消', '2025-03-26 00:42:29', 3);
+INSERT INTO `appointments` VALUES (7, 4, '2025-03-29', '上午', '已过时', '2025-03-26 00:42:29', 4);
+INSERT INTO `appointments` VALUES (8, 5, '2025-03-30', '上午', '已计划', '2025-03-26 00:42:29', 5);
+INSERT INTO `appointments` VALUES (9, 6, '2025-03-31', '下午', '已计划', '2025-03-26 00:40:00', 1);
+INSERT INTO `appointments` VALUES (10, 7, '2025-03-31', '上午', '已完成', '2025-03-26 00:42:29', 1);
+INSERT INTO `appointments` VALUES (11, 8, '2025-03-31', '上午', '取消', '2025-03-26 00:42:29', 8);
+INSERT INTO `appointments` VALUES (12, 9, '2025-04-01', '上午', '已计划', '2025-03-26 00:42:29', 9);
+INSERT INTO `appointments` VALUES (13, 10, '2025-04-01', '上午', '已计划', '2025-03-26 00:42:29', 10);
+INSERT INTO `appointments` VALUES (14, 1, '2025-04-03', '上午', '已计划', '2025-04-03 20:40:47', 1);
+INSERT INTO `appointments` VALUES (15, 1, '2025-07-03', '上午', '已计划', '2025-04-03 20:43:30', 6);
+
+-- ----------------------------
+-- Table structure for doctors
+-- ----------------------------
+DROP TABLE IF EXISTS `doctors`;
+CREATE TABLE `doctors`  (
+  `DoctorID` int NOT NULL AUTO_INCREMENT COMMENT '医生唯一标识',
+  `Name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '医生姓名',
+  `Gender` enum('男','女') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '性别',
+  `Phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '联系方式',
+  `Email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电子邮件',
+  `Department` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '所属科室',
+  `Specialization` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '专业方向',
+  `CreatedAt` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`DoctorID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '医生基本信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of doctors
+-- ----------------------------
+INSERT INTO `doctors` VALUES (1, '张伟', '男', '13800138001', 'zhangwei@example.com', '内科', '心血管', '2025-03-26 00:37:53');
+INSERT INTO `doctors` VALUES (2, '李娜', '女', '13800138002', 'lina@example.com', '内科', '普外科', '2025-03-26 00:37:53');
+INSERT INTO `doctors` VALUES (3, '王强', '男', '13800138003', 'wangqiang@example.com', '儿科', '新生儿科', '2025-03-26 00:37:53');
+INSERT INTO `doctors` VALUES (4, '赵敏', '女', '13800138004', 'zhaomin@example.com', '妇产科', '产科', '2025-03-26 00:37:53');
+INSERT INTO `doctors` VALUES (5, '刘洋', '男', '13800138005', 'liuyang@example.com', '骨科', '脊柱外科', '2025-03-26 00:37:53');
+INSERT INTO `doctors` VALUES (6, '陈杰', '男', '13800138006', 'chenjie@example.com', '皮肤科', '皮肤病', '2025-03-26 00:37:53');
+INSERT INTO `doctors` VALUES (7, '杨柳', '女', '13800138007', 'yangliu@example.com', '眼科', '视网膜疾病', '2025-03-26 00:37:53');
+INSERT INTO `doctors` VALUES (8, '吴刚', '男', '13800138008', 'wugang@example.com', '耳鼻喉科', '耳科', '2025-03-26 00:37:53');
+INSERT INTO `doctors` VALUES (9, '周婷', '女', '13800138009', 'zhouting@example.com', '耳鼻喉科', '牙周病', '2025-03-26 00:37:53');
+INSERT INTO `doctors` VALUES (10, '郑辉', '男', '13800138010', 'zhenghui@example.com', '神经内科', '癫痫', '2025-03-26 00:37:53');
 
 -- ----------------------------
 -- Table structure for drugconsumption
@@ -161,7 +203,7 @@ INSERT INTO `financialrecords` VALUES (23, 1, 1.00, NULL, '现金', '1', '未支
 INSERT INTO `financialrecords` VALUES (24, 1, 2.00, NULL, '银行卡', '3', '未支付', NULL);
 INSERT INTO `financialrecords` VALUES (25, 1, 22.00, NULL, '现金', '2332', '未支付', NULL);
 INSERT INTO `financialrecords` VALUES (26, 1, 200.00, '2025-03-08', '支付宝', 'sdaszd', '已支付', 'alipay:26');
-INSERT INTO `financialrecords` VALUES (27, 1, 200.00, NULL, '支付宝', 'sdaszd', '未支付', NULL);
+INSERT INTO `financialrecords` VALUES (27, 1, 200.00, NULL, '支付宝', 'sdaszd', '未支付', 'alipay:27');
 INSERT INTO `financialrecords` VALUES (28, 1, 200.00, NULL, '支付宝', 'sdaszd', '未支付', NULL);
 INSERT INTO `financialrecords` VALUES (29, 1, 122.00, NULL, '银行卡', '223', '未支付', NULL);
 
@@ -312,9 +354,9 @@ CREATE TABLE `medicalrecords`  (
 -- ----------------------------
 -- Records of medicalrecords
 -- ----------------------------
-INSERT INTO `medicalrecords` VALUES (1, 1, '感冒', '多喝水，休息', '血常规正常', '2025-03-08 18:10:05', '{\"data\": [{\"url\": \"https://mf-oss2.oss-cn-guangzhou.aliyuncs.com/mf/images/20250308/1741428603064.jfif\", \"name\": \"OIP (7).jfif\", \"label\": \"111\"}]}');
-INSERT INTO `medicalrecords` VALUES (2, 2, '贫血', '补铁，改善饮食', '血红蛋白偏低', '2025-03-10 15:02:35', '{\"data\": [{\"url\": \"https://mf-oss2.oss-cn-guangzhou.aliyuncs.com/mf/images/20250308/1741428589531.jfif\", \"name\": \"OIP.jfif\", \"label\": \"23\"}, {\"url\": \"https://mf-oss2.oss-cn-guangzhou.aliyuncs.com/mf/images/20250310/1741590152423.jfif\", \"name\": \"OIP (5).jfif\", \"label\": \"23\"}]}');
-INSERT INTO `medicalrecords` VALUES (3, 3, '骨折', '石膏固定', 'X光显示骨裂', '2025-03-08 18:09:56', '{\"data\": [{\"url\": \"https://mf-oss2.oss-cn-guangzhou.aliyuncs.com/mf/images/20250308/1741428569643.jfif\", \"name\": \"下载.jfif\", \"label\": \"00\"}, {\"url\": \"https://mf-oss2.oss-cn-guangzhou.aliyuncs.com/mf/images/20250308/1741428594692.jfif\", \"name\": \"OIP (4).jfif\", \"label\": \"54554\"}]}');
+INSERT INTO `medicalrecords` VALUES (1, 1, '感冒', '多喝水，休息', '血常规正常', '2025-04-01 17:01:22', '{\"data\": [{\"url\": \"https://mf-oss2.oss-cn-guangzhou.aliyuncs.com/mf/images/20250401/1743498080604.jfif\", \"name\": \"OIP (8).jfif\", \"label\": \"\"}]}');
+INSERT INTO `medicalrecords` VALUES (2, 1, '贫血', '补铁，改善饮食', '血红蛋白偏低', '2025-04-01 16:29:29', '{\"data\": [{\"url\": \"https://mf-oss2.oss-cn-guangzhou.aliyuncs.com/mf/images/20250308/1741428589531.jfif\", \"name\": \"OIP.jfif\", \"label\": \"23\"}, {\"url\": \"https://mf-oss2.oss-cn-guangzhou.aliyuncs.com/mf/images/20250310/1741590152423.jfif\", \"name\": \"OIP (5).jfif\", \"label\": \"23\"}]}');
+INSERT INTO `medicalrecords` VALUES (3, 1, '骨折', '石膏固定', 'X光显示骨裂', '2025-04-01 16:29:32', '{\"data\": [{\"url\": \"https://mf-oss2.oss-cn-guangzhou.aliyuncs.com/mf/images/20250308/1741428569643.jfif\", \"name\": \"下载.jfif\", \"label\": \"00\"}, {\"url\": \"https://mf-oss2.oss-cn-guangzhou.aliyuncs.com/mf/images/20250308/1741428594692.jfif\", \"name\": \"OIP (4).jfif\", \"label\": \"54554\"}]}');
 
 -- ----------------------------
 -- Table structure for patients
@@ -333,15 +375,16 @@ CREATE TABLE `patients`  (
   `id_card_type` enum('身份证','护照','港澳台证','其他') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '证件类型',
   `id_card_expiry` date NULL DEFAULT NULL COMMENT '证件有效期',
   PRIMARY KEY (`PatientID`) USING BTREE,
+  UNIQUE INDEX `id_card_number`(`id_card_number` ASC) USING BTREE,
   INDEX `date`(`PatientID` DESC) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '病人信息表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of patients
 -- ----------------------------
-INSERT INTO `patients` VALUES (1, '张三', '女性', '1990-05-15', '13800138000', '北京市朝阳区', '13800987654', '2025-01-19 13:20:39', '', '身份证', NULL);
-INSERT INTO `patients` VALUES (2, '李四', '其他', '1985-03-22', '13800238001', '上海市浦东新区', '13800765432', '2025-01-19 13:20:39', '', '护照', NULL);
-INSERT INTO `patients` VALUES (3, '王五', '男性', '1978-11-10', '13800338002', '广州市天河区', '13800543210', '2025-01-19 13:20:39', '', '身份证', NULL);
+INSERT INTO `patients` VALUES (1, '张三', '女性', '1990-05-15', '13800138000', '北京市朝阳区', '13800987654', '2025-01-19 13:20:39', '44010619780410003X', '身份证', NULL);
+INSERT INTO `patients` VALUES (2, '李四', '其他', '1985-03-22', '13800238001', '上海市浦东新区', '13800765432', '2025-01-19 13:20:39', 'E12345678', '护照', NULL);
+INSERT INTO `patients` VALUES (3, '王五', '男性', '1978-11-10', '13800338002', '广州市天河区', '13800543210', '2025-01-19 13:20:39', '44010619780710003X', '身份证', NULL);
 INSERT INTO `patients` VALUES (4, '张伟', '女性', '1985-01-15', '13800138000', '北京市朝阳区', '13900139000', '2025-02-11 16:26:40', '11010119850115001X', '身份证', '2035-01-15');
 INSERT INTO `patients` VALUES (5, '李娜', '男性', '1990-03-22', '13800138001', '上海市浦东新区', '13900139001', '2025-02-11 16:26:40', '31011519900322002X', '身份证', '2040-03-22');
 INSERT INTO `patients` VALUES (6, '王强', '男性', '1978-07-09', '13800138002', '广州市天河区', '13900139002', '2025-02-11 16:26:40', '44010619780709003X', '身份证', '2028-07-09');
@@ -362,7 +405,7 @@ INSERT INTO `patients` VALUES (20, '贾鑫', '其他', '1996-08-30', '1380013801
 INSERT INTO `patients` VALUES (21, '唐静', '女性', '1981-12-15', '13800138012', '福州市鼓楼区', '13900139017', '2025-02-11 16:26:40', '35010219811215018X', '身份证', '2031-12-15');
 INSERT INTO `patients` VALUES (22, '韩磊', '男性', '1987-04-07', '13800138018', '郑州市金水区', '13900139018', '2025-02-11 16:26:40', '41010519870407019X', '身份证', '2037-04-07');
 INSERT INTO `patients` VALUES (23, '曹丽', '女性', '1994-09-21', '13800138019', '济南市历下区', '13900139019', '2025-02-11 16:26:40', '37010219940921020X', '身份证', '2044-09-21');
-INSERT INTO `patients` VALUES (24, '1', '男性', '2025-02-26', '13000000123', '3', '3', '2025-03-06 15:26:24', '3', '身份证', '2025-03-28');
+INSERT INTO `patients` VALUES (24, '1', '男性', '2025-02-26', '13000000123', '3', '3', '2025-03-06 15:26:24', '37010219940921021X', '身份证', '2025-03-28');
 
 -- ----------------------------
 -- Table structure for rbac_permissions
@@ -376,7 +419,7 @@ CREATE TABLE `rbac_permissions`  (
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '权限描述信息',
   PRIMARY KEY (`permission_id`) USING BTREE,
   UNIQUE INDEX `permission_name`(`permission_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '权限表，存储系统中的操作权限定义' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '权限表，存储系统中的操作权限定义' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rbac_permissions
@@ -385,6 +428,7 @@ INSERT INTO `rbac_permissions` VALUES (1, 'View_Orders', '/pms/product/index1', 
 INSERT INTO `rbac_permissions` VALUES (2, 'Edit_Orders', '/pms/product/index2', 'write', '编辑订单详情');
 INSERT INTO `rbac_permissions` VALUES (3, 'Delete_Orders', '/pms/product/index3', 'delete', '删除订单');
 INSERT INTO `rbac_permissions` VALUES (4, 'System', '/**', 'all', '全部权限');
+INSERT INTO `rbac_permissions` VALUES (5, 'Customer', '/customer/**', 'all', '客户端全部的权限');
 
 -- ----------------------------
 -- Table structure for rbac_role_permission_relation
@@ -404,6 +448,7 @@ CREATE TABLE `rbac_role_permission_relation`  (
 -- ----------------------------
 INSERT INTO `rbac_role_permission_relation` VALUES (2, 3);
 INSERT INTO `rbac_role_permission_relation` VALUES (1, 4);
+INSERT INTO `rbac_role_permission_relation` VALUES (4, 5);
 
 -- ----------------------------
 -- Table structure for rbac_roles
@@ -415,7 +460,7 @@ CREATE TABLE `rbac_roles`  (
   `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '角色描述信息',
   PRIMARY KEY (`role_id`) USING BTREE,
   UNIQUE INDEX `role_name`(`role_name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表，定义系统中的角色' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '角色表，定义系统中的角色' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rbac_roles
@@ -423,6 +468,7 @@ CREATE TABLE `rbac_roles`  (
 INSERT INTO `rbac_roles` VALUES (1, 'Admin', '系统管理员，拥有所有权限');
 INSERT INTO `rbac_roles` VALUES (2, 'Editor', '内容编辑员，拥有编辑权限');
 INSERT INTO `rbac_roles` VALUES (3, 'Viewer', '仅拥有查看权限');
+INSERT INTO `rbac_roles` VALUES (4, 'Customer', '客户端权限');
 
 -- ----------------------------
 -- Table structure for rbac_user_role_relation
@@ -444,6 +490,7 @@ INSERT INTO `rbac_user_role_relation` VALUES (1, 1);
 INSERT INTO `rbac_user_role_relation` VALUES (4, 1);
 INSERT INTO `rbac_user_role_relation` VALUES (2, 2);
 INSERT INTO `rbac_user_role_relation` VALUES (3, 3);
+INSERT INTO `rbac_user_role_relation` VALUES (16, 4);
 
 -- ----------------------------
 -- Table structure for rbac_users
@@ -457,7 +504,7 @@ CREATE TABLE `rbac_users`  (
   `create_time` datetime NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`user_id`) USING BTREE,
   UNIQUE INDEX `username`(`username` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表，存储系统中的用户数据' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户信息表，存储系统中的用户数据' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of rbac_users
@@ -469,6 +516,49 @@ INSERT INTO `rbac_users` VALUES (4, 'admin1', '$2a$10$X9cJFKTFu0dVKUHC2v2cB.hPd1
 INSERT INTO `rbac_users` VALUES (7, 'admin2', '$2a$10$7HtznPYOpU4fvekjLRnNKe0tOK9hpJexI4L/07mbYpMr20jLvx9t2', 1, '2025-02-20 22:37:29');
 INSERT INTO `rbac_users` VALUES (8, 'admin3', '$2a$10$ssffdSt4hBuaE/U0WxPuYOtDqx6N8Dy8ZZzfbkHuVupP2DDoFspmW', 1, '2025-02-20 22:47:31');
 INSERT INTO `rbac_users` VALUES (9, 'admin4', '$2a$10$BT8C5UUs88Jfl8oEi.O7Z./PRWT0mO3JV0wIDqRFq9xtXIvwd62K2', 1, '2025-02-20 22:50:25');
+INSERT INTO `rbac_users` VALUES (16, 'ooo', '$2a$10$NsBqz1saLgWh9YalESGAgOYIDwWrVGNWFHx2isxvHswQFsEGBN.Bq', 1, '2025-04-02 02:03:25');
+
+-- ----------------------------
+-- Table structure for user_appointment_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `user_appointment_relation`;
+CREATE TABLE `user_appointment_relation`  (
+  `appointment_id` int NOT NULL COMMENT '挂号唯一标识，关联appointments表',
+  `user_id` int NOT NULL COMMENT '用户唯一标识，关联rbac_users表',
+  PRIMARY KEY (`appointment_id`) USING BTREE,
+  UNIQUE INDEX `unique_user_appointment`(`appointment_id` ASC, `user_id` ASC) USING BTREE,
+  INDEX `appointment_id`(`user_id` ASC) USING BTREE,
+  CONSTRAINT `user_appointment_relation_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `rbac_users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_appointment_relation_ibfk_2` FOREIGN KEY (`appointment_id`) REFERENCES `appointments` (`AppointmentID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户与挂号关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_appointment_relation
+-- ----------------------------
+INSERT INTO `user_appointment_relation` VALUES (4, 4);
+INSERT INTO `user_appointment_relation` VALUES (5, 4);
+INSERT INTO `user_appointment_relation` VALUES (14, 4);
+INSERT INTO `user_appointment_relation` VALUES (15, 4);
+
+-- ----------------------------
+-- Table structure for user_patient_relation
+-- ----------------------------
+DROP TABLE IF EXISTS `user_patient_relation`;
+CREATE TABLE `user_patient_relation`  (
+  `user_id` int NOT NULL COMMENT '用户唯一标识，关联rbac_users表',
+  `patient_id` int NOT NULL COMMENT '病人唯一标识，关联patients表',
+  PRIMARY KEY (`user_id`, `patient_id`) USING BTREE,
+  UNIQUE INDEX `unique_user_patient`(`user_id` ASC, `patient_id` ASC) USING BTREE,
+  UNIQUE INDEX `unique_user`(`user_id` ASC) USING BTREE,
+  UNIQUE INDEX `unique_patient`(`patient_id` ASC) USING BTREE,
+  CONSTRAINT `user_patient_relation_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `rbac_users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_patient_relation_ibfk_2` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`PatientID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户与病人关联表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of user_patient_relation
+-- ----------------------------
+INSERT INTO `user_patient_relation` VALUES (4, 1);
 
 -- ----------------------------
 -- Table structure for user_profiles
@@ -493,23 +583,17 @@ CREATE TABLE `user_profiles`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `rbac_users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '存储用户的扩展信息，包括个人详细资料，如姓名、性别、地址等' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '存储用户的扩展信息，包括个人详细资料，如姓名、性别、地址等' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_profiles
 -- ----------------------------
 
 -- ----------------------------
--- View structure for financialsummary
+-- View structure for view_appointment_details
 -- ----------------------------
-DROP VIEW IF EXISTS `financialsummary`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `financialsummary` AS select `financialrecords`.`PatientID` AS `病人唯一标识`,sum(`financialrecords`.`Amount`) AS `支付总额`,count(`financialrecords`.`TransactionID`) AS `总交易次数` from `financialrecords` group by `financialrecords`.`PatientID`;
-
--- ----------------------------
--- View structure for patientsummary
--- ----------------------------
-DROP VIEW IF EXISTS `patientsummary`;
-CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `patientsummary` AS select `patients`.`PatientID` AS `病人唯一标识`,`patients`.`Name` AS `病人姓名`,count(`appointments`.`AppointmentID`) AS `总挂号次数`,count(`inpatients`.`InpatientID`) AS `总住院次数` from ((`patients` left join `appointments` on((`patients`.`PatientID` = `appointments`.`PatientID`))) left join `inpatients` on((`patients`.`PatientID` = `inpatients`.`PatientID`))) group by `patients`.`PatientID`;
+DROP VIEW IF EXISTS `view_appointment_details`;
+CREATE ALGORITHM = UNDEFINED SQL SECURITY DEFINER VIEW `view_appointment_details` AS select `a`.`AppointmentID` AS `AppointmentID`,`a`.`AppointmentDate` AS `AppointmentDate`,`a`.`AppointmentSession` AS `AppointmentSession`,`a`.`Status` AS `Status`,`d`.`Name` AS `DoctorsName`,`d`.`Gender` AS `Gender`,`d`.`Department` AS `Department`,row_number() OVER (PARTITION BY `a`.`DoctorID`,`a`.`AppointmentDate`,`a`.`AppointmentSession` ORDER BY `a`.`CreatedAt` )  AS `number` from (`appointments` `a` join `doctors` `d` on((`a`.`DoctorID` = `d`.`DoctorID`)));
 
 -- ----------------------------
 -- View structure for view_bed_usage
