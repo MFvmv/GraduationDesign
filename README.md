@@ -1,10 +1,32 @@
 # 医院信息管理系统
 
 本项目是一个基于**Spring Boot**和**Vue**的医院信息管理系统，包含**管理端**和**客户端**两部分，旨在为医院提供高效的信息管理和便捷的客户端服务。
-## 管理端的地址
-http://mf-graduationdesign-hospital-management.asia <br>
-http://8.138.45.155/ (公网IP 管理端) <br>
-http://8.138.45.155:8080/swagger-ui/index.html (swagger API 文档)
+## 相关地址
+http://mf-graduationdesign-hospital-management.asia (重定向为swagger API 文档) <br>
+http://mf-graduationdesign-hospital-management.asia/admin (管理端) <br>
+http://mf-graduationdesign-hospital-management.asia/customer (用户端)<br>
+### 详细的nginx配置
+server {
+    listen       80;
+    server_name  mf-graduationdesign-hospital-management.asia; #修改域名
+    # 根路径重定向到完整 URL
+    location = / {
+        return 301 http://mf-graduationdesign-hospital-management.asia:8080/swagger-ui/index.html;
+    }
+    location /admin {
+        alias  /usr/share/nginx/html/admin; #代理到admin文件夹中
+        index  index.html index.htm;
+    }
+    location /customer  {
+        alias  /usr/share/nginx/html/customer ; #代理到customer文件夹中
+        index  index.html index.htm;
+    }
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}
+
 |        | 账号 | 密码|支付密码|
 | ------ | ------ | ------ |------ |
 | 测试登录      | admin1 |123456|
