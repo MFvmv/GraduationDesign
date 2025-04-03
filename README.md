@@ -6,6 +6,7 @@ http://mf-graduationdesign-hospital-management.asia (重定向为swagger API 文
 http://mf-graduationdesign-hospital-management.asia/admin (管理端) <br>
 http://mf-graduationdesign-hospital-management.asia/customer (用户端)<br>
 ### 详细的nginx配置
+```json
 server {
     listen       80;
     server_name  mf-graduationdesign-hospital-management.asia; #修改域名
