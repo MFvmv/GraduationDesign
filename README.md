@@ -4,7 +4,7 @@
 ## 相关地址
 http://mf-graduationdesign-hospital-management.asia (重定向为swagger API 文档) <br>
 http://mf-graduationdesign-hospital-management.asia/admin (管理端) <br>
-http://mf-graduationdesign-hospital-management.asia/customer (用户端)<br>
+http://mf-graduationdesign-hospital-management.asia/customer (客户端)<br>
 ### 详细的nginx配置
 ```nginx
 server {
@@ -143,6 +143,10 @@ src
 ![image](https://github.com/user-attachments/assets/e1e8f899-8289-4103-abda-c32b002b4f2a)
 ![image](https://github.com/user-attachments/assets/407961d3-786d-42cc-b00c-656149915799)
 ![image](https://github.com/user-attachments/assets/54309a3f-970d-4c7b-975a-23d8ce6eb71e)
+### 客户端
+![image](https://github.com/user-attachments/assets/9d0f1743-7242-4f42-9055-c554afaba5fb)
+![image](https://github.com/user-attachments/assets/17167d2d-8dae-4a72-8c00-749a368ac4a0)
+![image](https://github.com/user-attachments/assets/163833e2-acfd-450c-a4eb-76fb9debdbd3)
 
 ## 快速启动
 
