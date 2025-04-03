@@ -114,6 +114,9 @@ src
 
 ---
 
+## 管理端运行效果图
+![image](https://github.com/user-attachments/assets/ac3584ac-40c2-427a-8432-34717f8f765b)
+
 ## 快速启动
 
 ### 后端启动
