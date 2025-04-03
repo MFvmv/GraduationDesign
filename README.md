@@ -7,7 +7,6 @@ http://mf-graduationdesign-hospital-management.asia/admin (管理端) <br>
 http://mf-graduationdesign-hospital-management.asia/customer (用户端)<br>
 ### 详细的nginx配置
 ```json
-<div style="background-color: white; padding: 10px;">
 server {
     listen       80;
     server_name  mf-graduationdesign-hospital-management.asia; #修改域名
@@ -28,7 +27,6 @@ server {
         root   /usr/share/nginx/html;
     }
 }
-</div>
 ```
 |        | 账号 | 密码|支付密码|
 | ------ | ------ | ------ |------ |
