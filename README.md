@@ -1,4 +1,4 @@
-# 医院信息管理系统
+![image](https://github.com/user-attachments/assets/3536301d-ce9e-4274-ab15-8a0fee962b71)# 医院信息管理系统
 
 本项目是一个基于**Spring Boot**和**Vue**的医院信息管理系统，包含**管理端**和**客户端**两部分，旨在为医院提供高效的信息管理和便捷的客户端服务。
 ## 相关地址
@@ -148,6 +148,18 @@ src
 ![image](https://github.com/user-attachments/assets/17167d2d-8dae-4a72-8c00-749a368ac4a0)
 ![image](https://github.com/user-attachments/assets/163833e2-acfd-450c-a4eb-76fb9debdbd3)
 
+## 空间可视化
+### 模型处理
+1. 寻找BIM模型，导出fbx格式
+![image](https://github.com/user-attachments/assets/f550262e-fe8e-4260-b223-b8f3a71d45e2)
+2. 对模型进行处理
+   1. 减少不必要模型，例如管线、风道等
+   2. 地面贴合
+   3. 导出性能较好glb格式
+![image](https://github.com/user-attachments/assets/20926128-c0dc-47d3-bee7-9b48d27d42a9)
+3. 用Three进行加载和优化
+    1. 高性能的加载
+    2. 模型交互（床位的划分）
 ## 快速启动
 
 ### 后端启动
