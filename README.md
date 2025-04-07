@@ -155,7 +155,8 @@ src
 2. 对模型进行处理
    1. 减少不必要模型，例如管线、风道等
    2. 地面贴合
-   3. 导出性能较好glb格式
+   3. 按层合并模型
+   4. 导出性能较好glb格式
 ![image](https://github.com/user-attachments/assets/20926128-c0dc-47d3-bee7-9b48d27d42a9)
 3. 用Three进行加载和优化
     1. 高性能的加载
