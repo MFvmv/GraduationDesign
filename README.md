@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/3536301d-ce9e-4274-ab15-8a0fee962b71)# 医院信息管理系统
+# 医院信息管理系统
 
 本项目是一个基于**Spring Boot**和**Vue**的医院信息管理系统，包含**管理端**和**客户端**两部分，旨在为医院提供高效的信息管理和便捷的客户端服务。
 ## 相关地址
