@@ -161,6 +161,8 @@ src
 3. 用Three进行加载和优化
     1. 高性能的加载
     2. 模型交互（床位的划分）
+![image](https://github.com/user-attachments/assets/0ca5c870-8d59-4390-8e1d-3dc6241c4815)
+
 ## 快速启动
 
 ### 后端启动
