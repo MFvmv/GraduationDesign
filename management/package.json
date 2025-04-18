@@ -15,6 +15,7 @@
     "js-cookie": "^3.0.5",
     "qrcode": "^1.5.4",
     "sortablejs": "^1.15.6",
+    "three": "^0.175.0",
     "vue": "^3.2.13",
     "vue-form-craft": "^4.6.6",
     "vue-router": "^4.5.0",

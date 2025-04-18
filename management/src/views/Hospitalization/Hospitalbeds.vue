@@ -1,5 +1,6 @@
 <template>
   <MTable
+  v-show="!openSpace"
   ref="table"
   :tablePetName="tablePetName"
   :apiModule="api"
@@ -11,7 +12,14 @@
   :Edit="handleEdit"
   :Delete="handleDelete"
   >
+  <template #__action__>
+    <el-button type="primary" @click="openSpace = !openSpace">空间可视化</el-button>
+  </template>
   </MTable>
+  <div v-if="openSpace">
+    <el-button type="primary" @click="openSpace = !openSpace">返回列表视图</el-button>
+    <space :update="update"></space>
+  </div>
   <MForm
   v-model:visible="dialogVisibleAdd"
   :item="formAdd"
@@ -42,19 +50,22 @@ import MForm from '@/components/Form';
 import { FORM_TYPE,TABLE_FILTER_TYPE,NUMBER_RULES} from '@/config';
 import { ElMessage,ElMessageBox} from 'element-plus';
 import { formUpdate_callback } from './Hospitalbeds';
+import space from '@/views/Hospitalization/3DBed';
 
 export default {
 name: 'PatientManagement',
 components: {
   MTable,
-  MForm
+  MForm,
+  space
 },
 data(){
   return{
     columnWidth:{},
     dialogVisibleAdd:false,
     dialogVisibleUpdate:false,
-    segmentedValue:2
+    segmentedValue:2,
+    openSpace:true
   }
 },
 computed: {
@@ -131,6 +142,10 @@ setup() {
   }
 },
 methods: {
+  update(row){
+    let scope = {row}
+    this.handleEdit(scope)
+  },
   handleDelete(scope){
     ElMessageBox.confirm('你确定要删除这条数据吗？', '警告', {
       confirmButtonText: '确定',

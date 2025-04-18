@@ -22,6 +22,9 @@ export default {
   },
   components: {
     Sidebar
+  },
+  mounted(){
+    console.log()
   }
 }
 </script>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hospital.mbg.mapper.SpaceModel3dJsonMapper">
+  <resultMap id="BaseResultMap" type="com.hospital.mbg.model.SpaceModel3dJson">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="bed_id" jdbcType="INTEGER" property="bed_id" />
+    <result column="floor_number" jdbcType="INTEGER" property="floor_number" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="created_at" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updated_at" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hospital.mbg.model.SpaceModel3dJson">
+    <result column="model_data" jdbcType="LONGVARCHAR" property="model_data" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, bed_id, floor_number, created_at, updated_at
+  </sql>
+  <sql id="Blob_Column_List">
+    model_data
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.hospital.mbg.model.SpaceModel3dJsonExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from space_model_3d_json
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.hospital.mbg.model.SpaceModel3dJsonExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from space_model_3d_json
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from space_model_3d_json
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from space_model_3d_json
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.hospital.mbg.model.SpaceModel3dJsonExample">
+    delete from space_model_3d_json
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyProperty="id" parameterType="com.hospital.mbg.model.SpaceModel3dJson" useGeneratedKeys="true">
+    insert into space_model_3d_json (id, bed_id, floor_number, 
+      created_at, updated_at, model_data
+      )
+    values (#{id,jdbcType=INTEGER}, #{bed_id,jdbcType=INTEGER}, #{floor_number,jdbcType=INTEGER}, 
+      #{created_at,jdbcType=TIMESTAMP}, #{updated_at,jdbcType=TIMESTAMP}, #{model_data,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyProperty="id" parameterType="com.hospital.mbg.model.SpaceModel3dJson" useGeneratedKeys="true">
+    insert into space_model_3d_json
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bed_id != null">
+        bed_id,
+      </if>
+      <if test="floor_number != null">
+        floor_number,
+      </if>
+      <if test="created_at != null">
+        created_at,
+      </if>
+      <if test="updated_at != null">
+        updated_at,
+      </if>
+      <if test="model_data != null">
+        model_data,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bed_id != null">
+        #{bed_id,jdbcType=INTEGER},
+      </if>
+      <if test="floor_number != null">
+        #{floor_number,jdbcType=INTEGER},
+      </if>
+      <if test="created_at != null">
+        #{created_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated_at != null">
+        #{updated_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="model_data != null">
+        #{model_data,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.hospital.mbg.model.SpaceModel3dJsonExample" resultType="java.lang.Long">
+    select count(*) from space_model_3d_json
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update space_model_3d_json
+    <set>
+      <if test="row.id != null">
+        id = #{row.id,jdbcType=INTEGER},
+      </if>
+      <if test="row.bed_id != null">
+        bed_id = #{row.bed_id,jdbcType=INTEGER},
+      </if>
+      <if test="row.floor_number != null">
+        floor_number = #{row.floor_number,jdbcType=INTEGER},
+      </if>
+      <if test="row.created_at != null">
+        created_at = #{row.created_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.updated_at != null">
+        updated_at = #{row.updated_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="row.model_data != null">
+        model_data = #{row.model_data,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update space_model_3d_json
+    set id = #{row.id,jdbcType=INTEGER},
+      bed_id = #{row.bed_id,jdbcType=INTEGER},
+      floor_number = #{row.floor_number,jdbcType=INTEGER},
+      created_at = #{row.created_at,jdbcType=TIMESTAMP},
+      updated_at = #{row.updated_at,jdbcType=TIMESTAMP},
+      model_data = #{row.model_data,jdbcType=LONGVARCHAR}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update space_model_3d_json
+    set id = #{row.id,jdbcType=INTEGER},
+      bed_id = #{row.bed_id,jdbcType=INTEGER},
+      floor_number = #{row.floor_number,jdbcType=INTEGER},
+      created_at = #{row.created_at,jdbcType=TIMESTAMP},
+      updated_at = #{row.updated_at,jdbcType=TIMESTAMP}
+    <if test="example != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.hospital.mbg.model.SpaceModel3dJson">
+    update space_model_3d_json
+    <set>
+      <if test="bed_id != null">
+        bed_id = #{bed_id,jdbcType=INTEGER},
+      </if>
+      <if test="floor_number != null">
+        floor_number = #{floor_number,jdbcType=INTEGER},
+      </if>
+      <if test="created_at != null">
+        created_at = #{created_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated_at != null">
+        updated_at = #{updated_at,jdbcType=TIMESTAMP},
+      </if>
+      <if test="model_data != null">
+        model_data = #{model_data,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.hospital.mbg.model.SpaceModel3dJson">
+    update space_model_3d_json
+    set bed_id = #{bed_id,jdbcType=INTEGER},
+      floor_number = #{floor_number,jdbcType=INTEGER},
+      created_at = #{created_at,jdbcType=TIMESTAMP},
+      updated_at = #{updated_at,jdbcType=TIMESTAMP},
+      model_data = #{model_data,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.hospital.mbg.model.SpaceModel3dJson">
+    update space_model_3d_json
+    set bed_id = #{bed_id,jdbcType=INTEGER},
+      floor_number = #{floor_number,jdbcType=INTEGER},
+      created_at = #{created_at,jdbcType=TIMESTAMP},
+      updated_at = #{updated_at,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -11,7 +11,7 @@
  Target Server Version : 80020 (8.0.20)
  File Encoding         : 65001
 
- Date: 03/04/2025 21:24:24
+ Date: 18/04/2025 22:45:51
 */
 
 SET NAMES utf8mb4;
@@ -519,6 +519,28 @@ INSERT INTO `rbac_users` VALUES (9, 'admin4', '$2a$10$BT8C5UUs88Jfl8oEi.O7Z./PRW
 INSERT INTO `rbac_users` VALUES (16, 'ooo', '$2a$10$NsBqz1saLgWh9YalESGAgOYIDwWrVGNWFHx2isxvHswQFsEGBN.Bq', 1, '2025-04-02 02:03:25');
 
 -- ----------------------------
+-- Table structure for space_model_3d_json
+-- ----------------------------
+DROP TABLE IF EXISTS `space_model_3d_json`;
+CREATE TABLE `space_model_3d_json`  (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '3D模型记录ID',
+  `bed_id` int NULL DEFAULT NULL COMMENT '关联病床ID',
+  `floor_number` int NOT NULL COMMENT '楼层号',
+  `model_data` json NOT NULL COMMENT '存储3D模型的JSON格式数据',
+  `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
+  `updated_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `fk_model_bed`(`bed_id` ASC) USING BTREE,
+  CONSTRAINT `fk_model_bed` FOREIGN KEY (`bed_id`) REFERENCES `hospitalbeds` (`BedID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '存储3D模型JSON数据的表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of space_model_3d_json
+-- ----------------------------
+INSERT INTO `space_model_3d_json` VALUES (25, NULL, 3, '{\"object\": {\"up\": [0, 1, 0], \"type\": \"Group\", \"uuid\": \"a9bd5cad-b20b-4b37-8a2c-cfffefb6a2b0\", \"layers\": 1, \"matrix\": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], \"children\": [{\"up\": [0, 1, 0], \"type\": \"Mesh\", \"uuid\": \"92aa766f-86cd-41c7-8110-2fe904e1feac\", \"layers\": 1, \"matrix\": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 19.903686550465927, -111.4398764930374, -12.224999666214009, 1], \"geometry\": \"55a54394-bb37-4578-ae11-ab3b61c911f2\", \"material\": \"8ef5b70e-7c94-4bc2-83cb-414dc78f5a6b\"}, {\"up\": [0, 1, 0], \"type\": \"Line\", \"uuid\": \"ed2ab5bd-b0a9-4e74-bc68-fed7fe8daa5c\", \"layers\": 1, \"matrix\": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], \"geometry\": \"922d2cee-b108-4de7-bdca-f63756ebb57b\", \"material\": \"7495f0f6-ab16-4cdb-ad61-7fdb235cd811\"}, {\"up\": [0, 1, 0], \"type\": \"Mesh\", \"uuid\": \"ed69534c-1fd4-4ba3-a8b5-3b3bb6435743\", \"layers\": 1, \"matrix\": [0.99492588344538, -0.10061056828335398, 0.0000003617142007125653, 0, -0.10061056828334732, -0.9949258834454456, -0.000000036577871604381507, 0, 0.0000003635589411474247, -6.930700183631523e-17, -0.9999999999999338, 0, 27.839677810668945, -105.6910400390625, -12.22499942779541, 1], \"geometry\": \"0bbc718d-71e0-46e8-92b4-144c8c217062\", \"material\": \"e7c6695a-a5bf-48eb-aa8d-72449f2e34ff\", \"userData\": {\"xx\": 0, \"bed_id\": null, \"selectable\": true}}]}, \"metadata\": {\"type\": \"Object\", \"version\": 4.6, \"generator\": \"Object3D.toJSON\"}, \"materials\": [{\"type\": \"MeshBasicMaterial\", \"uuid\": \"8ef5b70e-7c94-4bc2-83cb-414dc78f5a6b\", \"color\": 16711680, \"blendColor\": 0, \"reflectivity\": 1, \"envMapRotation\": [0, 0, 0, \"XYZ\"], \"refractionRatio\": 0.98}, {\"type\": \"LineBasicMaterial\", \"uuid\": \"7495f0f6-ab16-4cdb-ad61-7fdb235cd811\", \"color\": 16776960, \"blendColor\": 0}, {\"type\": \"MeshBasicMaterial\", \"uuid\": \"e7c6695a-a5bf-48eb-aa8d-72449f2e34ff\", \"color\": 65280, \"opacity\": 0.5, \"blendColor\": 0, \"depthWrite\": false, \"transparent\": true, \"reflectivity\": 1, \"envMapRotation\": [0, 0, 0, \"XYZ\"], \"refractionRatio\": 0.98}], \"geometries\": [{\"type\": \"SphereGeometry\", \"uuid\": \"55a54394-bb37-4578-ae11-ab3b61c911f2\", \"radius\": 0.1, \"phiStart\": 0, \"phiLength\": 6.283185307179586, \"thetaStart\": 0, \"thetaLength\": 3.141592653589793, \"widthSegments\": 5, \"heightSegments\": 5}, {\"data\": {\"attributes\": {\"position\": {\"type\": \"Float32Array\", \"array\": [19.9036865234375, -111.43987274169922, -12.22499942779541, 34.464088439941406, -112.91227722167967, -12.22499942779541, 35.77566909790039, -99.94219970703124, -12.22499942779541, 21.215267181396484, -98.46980285644533, -12.22499942779541, 19.9036865234375, -111.43987274169922, -12.22499942779541], \"itemSize\": 3, \"normalized\": false}}}, \"type\": \"BufferGeometry\", \"uuid\": \"922d2cee-b108-4de7-bdca-f63756ebb57b\"}, {\"type\": \"BoxGeometry\", \"uuid\": \"0bbc718d-71e0-46e8-92b4-144c8c217062\", \"depth\": 4.549999713897721, \"width\": 14.634658825940832, \"height\": 13.036221958430046, \"depthSegments\": 1, \"widthSegments\": 1, \"heightSegments\": 1}]}', '2025-04-17 22:58:23', '2025-04-17 22:58:23');
+INSERT INTO `space_model_3d_json` VALUES (27, NULL, 3, '{\"object\": {\"up\": [0, 1, 0], \"type\": \"Group\", \"uuid\": \"2bc0a1d2-f42d-4725-8cfb-f531608d6aa4\", \"layers\": 1, \"matrix\": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], \"children\": [{\"up\": [0, 1, 0], \"type\": \"Mesh\", \"uuid\": \"3d964e05-5878-4a6c-adfc-7f3f6d6bb6e4\", \"layers\": 1, \"matrix\": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 46.6727383647699, -116.99389354274902, -12.22499966621402, 1], \"geometry\": \"6eb0d486-51a0-4df4-b5fe-d068855231df\", \"material\": \"d7951b5c-c420-4ae1-87d3-2a5ef459d145\"}, {\"up\": [0, 1, 0], \"type\": \"Line\", \"uuid\": \"149d2d92-f249-47a8-b1a6-0b422d61307c\", \"layers\": 1, \"matrix\": [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], \"geometry\": \"e8d543d9-6966-4006-b09f-a5675ce2ce4f\", \"material\": \"489fc78c-1ade-46ce-b143-96dbac877ac3\"}, {\"up\": [0, 1, 0], \"type\": \"Mesh\", \"uuid\": \"f473a112-68eb-4a8c-afb0-6fc9919ae80d\", \"layers\": 1, \"matrix\": [-0.977015808491488, -0.2131668594263528, 0.00000016803246544911264, 0, 0.21316685942634964, -0.9770158084915024, -0.000000036661589985614544, 0, 0.0000001719854110823954, -3.892469764191193e-17, 0.9999999999999852, 0, 49.560516357421875, -109.7076187133789, -12.22499942779541, 1], \"geometry\": \"fe63207b-ab3b-4d3d-a455-1bf4b679b112\", \"material\": \"fa4d801b-03ec-4108-a105-47c2c061ef2a\", \"userData\": {\"xx\": 0, \"bed_id\": null, \"selectable\": true}}]}, \"metadata\": {\"type\": \"Object\", \"version\": 4.6, \"generator\": \"Object3D.toJSON\"}, \"materials\": [{\"type\": \"MeshBasicMaterial\", \"uuid\": \"d7951b5c-c420-4ae1-87d3-2a5ef459d145\", \"color\": 16711680, \"blendColor\": 0, \"reflectivity\": 1, \"envMapRotation\": [0, 0, 0, \"XYZ\"], \"refractionRatio\": 0.98}, {\"type\": \"LineBasicMaterial\", \"uuid\": \"489fc78c-1ade-46ce-b143-96dbac877ac3\", \"color\": 16776960, \"blendColor\": 0}, {\"type\": \"MeshBasicMaterial\", \"uuid\": \"fa4d801b-03ec-4108-a105-47c2c061ef2a\", \"color\": 65280, \"opacity\": 0.5, \"blendColor\": 0, \"depthWrite\": false, \"transparent\": true, \"reflectivity\": 1, \"envMapRotation\": [0, 0, 0, \"XYZ\"], \"refractionRatio\": 0.98}], \"geometries\": [{\"type\": \"SphereGeometry\", \"uuid\": \"6eb0d486-51a0-4df4-b5fe-d068855231df\", \"radius\": 0.1, \"phiStart\": 0, \"phiLength\": 6.283185307179586, \"thetaStart\": 0, \"thetaLength\": 3.141592653589793, \"widthSegments\": 5, \"heightSegments\": 5}, {\"data\": {\"attributes\": {\"position\": {\"type\": \"Float32Array\", \"array\": [46.67273712158203, -116.993896484375, -12.22499942779541, 55.22084045410156, -115.12885284423828, -12.22499942779541, 52.44829177856445, -102.4213409423828, -12.22499942779541, 43.90019226074219, -104.28638458251952, -12.22499942779541, 46.67273712158203, -116.993896484375, -12.22499942779541], \"itemSize\": 3, \"normalized\": false}}}, \"type\": \"BufferGeometry\", \"uuid\": \"e8d543d9-6966-4006-b09f-a5675ce2ce4f\"}, {\"type\": \"BoxGeometry\", \"uuid\": \"fe63207b-ab3b-4d3d-a455-1bf4b679b112\", \"depth\": 4.549999713897721, \"width\": 8.749194145058084, \"height\": 13.00645428128347, \"depthSegments\": 1, \"widthSegments\": 1, \"heightSegments\": 1}]}', '2025-04-17 23:24:40', '2025-04-17 23:24:40');
+
+-- ----------------------------
 -- Table structure for user_appointment_relation
 -- ----------------------------
 DROP TABLE IF EXISTS `user_appointment_relation`;
@@ -583,7 +605,7 @@ CREATE TABLE `user_profiles`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `user_id`(`user_id` ASC) USING BTREE,
   CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `rbac_users` (`user_id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '存储用户的扩展信息，包括个人详细资料，如姓名、性别、地址等' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '存储用户的扩展信息，包括个人详细资料，如姓名、性别、地址等' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_profiles
